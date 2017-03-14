@@ -2,6 +2,7 @@
 
 namespace League\JsonReference;
 
+use League\JsonReference\ScopeResolvers\JsonSchemaScopeResolver;
 use League\JsonReference\ScopeResolvers\NullScopeResolver;
 
 final class Dereferencer implements DereferencerInterface
@@ -28,6 +29,26 @@ final class Dereferencer implements DereferencerInterface
         $this->scopeResolver = $scopeResolver ?: new NullScopeResolver();
 
         Reference::setDereferencerInstance($this);
+    }
+
+    /**
+     * Create a new dereferencer configured for dereferencing JSON Schema Draft4 schemas.
+     *
+     * @return \League\JsonReference\Dereferencer
+     */
+    public static function draft4()
+    {
+        return new self(new JsonSchemaScopeResolver(JsonSchemaScopeResolver::KEYWORD_DRAFT_4));
+    }
+
+    /**
+     * Create a new dereferencer configured for dereferencing JSON Schema Draft6 schemas.
+     *
+     * @return \League\JsonReference\Dereferencer
+     */
+    public static function draft6()
+    {
+        return new self(new JsonSchemaScopeResolver(JsonSchemaScopeResolver::KEYWORD_DRAFT_6));
     }
 
     /**

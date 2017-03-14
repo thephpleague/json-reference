@@ -6,7 +6,6 @@ use League\JsonReference\Dereferencer;
 use League\JsonReference\Loaders\ArrayLoader;
 use League\JsonReference\Pointer;
 use League\JsonReference\Reference;
-use League\JsonReference\ScopeResolvers\JsonSchemaScopeResolver;
 
 class DereferencerTest extends \PHPUnit_Framework_TestCase
 {
@@ -168,7 +167,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_relative_scope_against_an_id()
     {
-        $deref = new Dereferencer(new JsonSchemaScopeResolver());
+        $deref = Dereferencer::draft4();
         $result = $deref->dereference(json_decode('{"id": "http://localhost:1234/test.json", "properties": {"album": {"$ref": "album.json"}}}'));
         $this->assertSame('object', $result->properties->album->type);
     }

@@ -9,6 +9,19 @@ use League\JsonReference\ScopeResolver;
 
 final class JsonSchemaScopeResolver implements ScopeResolver
 {
+    const KEYWORD_DRAFT_4 = 'id';
+    const KEYWORD_DRAFT_6 = '$id';
+
+    /**
+     * @var string
+     */
+    private $keyword;
+
+    public function __construct($keyword)
+    {
+        $this->keyword = $keyword;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -21,8 +34,8 @@ final class JsonSchemaScopeResolver implements ScopeResolver
             if (!empty($segment)) {
                 $currentPath = pointer_push($currentPath, $segment);
             }
-            if ($pointer->has($currentPath . '/id')) {
-                $id = $pointer->get($currentPath . '/id');
+            if ($pointer->has($currentPath . '/' . $this->keyword)) {
+                $id = $pointer->get($currentPath . '/' . $this->keyword);
                 if (is_string($id)) {
                     $currentScope = resolve_uri($id, $currentScope);
                 }
