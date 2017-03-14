@@ -168,7 +168,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_relative_scope_against_an_id()
     {
-        $deref = new Dereferencer(null, new JsonSchemaScopeResolver());
+        $deref = new Dereferencer(new JsonSchemaScopeResolver());
         $result = $deref->dereference(json_decode('{"id": "http://localhost:1234/test.json", "properties": {"album": {"$ref": "album.json"}}}'));
         $this->assertSame('object', $result->properties->album->type);
     }
