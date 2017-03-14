@@ -5,6 +5,16 @@ namespace League\JsonReference;
 use Sabre\Uri;
 
 /**
+ * @param object|array $json
+ *
+ * @return Pointer
+ */
+function pointer($json)
+{
+   return new Pointer($json);
+}
+
+/**
  * Escape a JSON Pointer.
  *
  * @param  string $pointer
@@ -194,14 +204,9 @@ function schema_extract($schema, callable $callback, $pointer = '')
 function merge_ref($schema, $resolvedRef, $path = '')
 {
     if ($path === '') {
-        // Immediately resolve root references, because
-        // get_object_vars does not work for reference proxies.
-        while ($resolvedRef instanceof Reference) {
-            $resolvedRef = $resolvedRef->resolve();
-        }
         unset($schema->{'$ref'});
-        foreach (get_object_vars($resolvedRef) as $prop => $value) {
-            $schema->$prop = $value;
+        foreach ($resolvedRef as $prop => $value) {
+            pointer($schema)->set('/' . $prop, $value);
         }
         return;
     }

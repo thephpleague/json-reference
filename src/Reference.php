@@ -110,7 +110,11 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     public function getIterator()
     {
-        $schema = $this->resolve();
+        // Recursively resolve until we hit a real schema
+        //because you can't use get_object_vars on a reference.
+        do {
+            $schema = $this->resolve();
+        } while ($schema instanceof Reference);
 
         if (!is_object($schema) && !is_array($schema)) {
             throw new \InvalidArgumentException(

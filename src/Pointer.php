@@ -14,13 +14,12 @@ use League\JsonReference\Pointer\Parser;
 final class Pointer
 {
     /**
-     * @var object
+     * @var object|array
      */
     private $json;
 
     /**
-     * Pointer constructor.
-     * @param object $json
+     * @param object|array $json
      */
     public function __construct($json)
     {
