@@ -5,7 +5,7 @@ namespace League\JsonReference\Bench;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
 use League\JsonReference\CachedDereferencer;
-use League\JsonReference\CoreDereferencer;
+use League\JsonReference\Dereferencer;
 
 /**
  * @Groups({"dereference"})
@@ -30,12 +30,12 @@ abstract class DereferenceBenchmark extends Benchmark
     public function benchStandard()
     {
         $schema = $this->schema;
-        (new CoreDereferencer())->dereference($schema);
+        (new Dereferencer())->dereference($schema);
     }
 
     public function benchArrayCache()
     {
         $schema = $this->schema;
-        (new CachedDereferencer(new CoreDereferencer(), $this->arrayCache))->dereference($schema);
+        (new CachedDereferencer(new Dereferencer(), $this->arrayCache))->dereference($schema);
     }
 }

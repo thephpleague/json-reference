@@ -2,7 +2,7 @@
 
 namespace League\JsonReference\Test;
 
-use League\JsonReference\CoreDereferencer;
+use League\JsonReference\Dereferencer;
 use League\JsonReference\Loaders\ArrayLoader;
 use League\JsonReference\Pointer;
 use League\JsonReference\Reference;
@@ -12,7 +12,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 {
     function test_it_resolves_inline_references()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
         $result = $deref->dereference($path);
 
@@ -22,7 +22,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_inline_references_when_initial_schema_used_pointer()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json#/properties/billing_address';
         $result = $deref->dereference($path);
 
@@ -37,7 +37,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
         $loader = new ArrayLoader(
             ['json-schema.org/draft-04/schema' => file_get_contents(__DIR__ . '/fixtures/draft4-schema.json')]
         );
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $deref->getLoaderManager()->registerLoader('http', $loader);
         $deref->getLoaderManager()->registerLoader('https', $loader);
         $result = $deref->dereference('http://json-schema.org/draft-04/schema#');
@@ -46,7 +46,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_remote_references_without_an_id()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $result = $deref->dereference('http://localhost:1234/albums.json');
 
         $this->assertSame('string', $result->items->properties->title->type);
@@ -55,20 +55,20 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
     function test_it_fails_when_resolving_a_remote_reference_without_id_or_uri()
     {
         $this->setExpectedException(\InvalidArgumentException::class);
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $deref->dereference(json_decode('{"$ref": "album.json"}'));
     }
 
     function test_it_resolves_web_remote_references_with_fragments()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $result = $deref->dereference('http://localhost:1234/subSchemas.json#/relativeRefToInteger');
         $this->assertSame(['type' => 'integer'], (array) $result);
     }
 
     function test_it_resolves_file_remote_references_with_fragments()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path = 'file://' . __DIR__ . '/fixtures/schema.json#/properties';
         $result = $deref->dereference($path);
         $this->assertArrayHasKey('name', (array) $result);
@@ -76,7 +76,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_recursive_root_pointers()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/recursive-root-pointer.json';
         $result = $deref->dereference($path);
         $this->assertSame(
@@ -87,7 +87,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_circular_references_to_self()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/circular-ref-self.json';
         $result = $deref->dereference($path);
 
@@ -104,7 +104,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_circular_references_to_parent()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/circular-ref-parent.json';
         $result = $deref->dereference($path);
         $ref    = $result
@@ -120,7 +120,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_indirect_circular_references()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/circular-ref-indirect.json';
         $result = $deref->dereference($path);
 
@@ -132,7 +132,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_resolves_references_in_arrays()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/array-ref.json';
         $result = $deref->dereference($path);
         $this->assertSame($result->items[0], $result->items[1]->resolve());
@@ -140,7 +140,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_dereferences_properties_that_begin_with_a_slash()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/slash-property.json';
         $result = $deref->dereference($path);
         $slashProperty = '/slash-item';
@@ -149,7 +149,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_dereferences_properties_with_tilde_in_name()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/tilde-property.json';
         $result = $deref->dereference($path);
         $tildeProperty = 'tilde~item';
@@ -158,7 +158,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_ignores_references_that_are_not_strings()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/property-named-ref.json';
         $result = $deref->dereference($path);
 
@@ -168,14 +168,14 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_resolves_relative_scope_against_an_id()
     {
-        $deref = new CoreDereferencer(null, new JsonSchemaScopeResolver());
+        $deref = new Dereferencer(null, new JsonSchemaScopeResolver());
         $result = $deref->dereference(json_decode('{"id": "http://localhost:1234/test.json", "properties": {"album": {"$ref": "album.json"}}}'));
         $this->assertSame('object', $result->properties->album->type);
     }
 
     function test_it_resolves_circular_external_references()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/circular-ext-ref.json';
         $result = $deref->dereference($path);
         $this->assertInstanceOf(Reference::class, $result->properties->rating);
@@ -185,7 +185,7 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_returns_serializable_schemas()
     {
-        $deref  = new CoreDereferencer();
+        $deref  = new Dereferencer();
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
         $result = $deref->dereference($path);
 

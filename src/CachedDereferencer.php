@@ -6,10 +6,10 @@ use Closure;
 use League\JsonReference\Loaders\CachedLoader;
 use Psr\SimpleCache\CacheInterface;
 
-final class CachedDereferencer implements Dereferencer
+final class CachedDereferencer implements DereferencerInterface
 {
     /**
-     * @var CoreDereferencer
+     * @var Dereferencer
      */
     private $dereferencer;
 
@@ -19,11 +19,11 @@ final class CachedDereferencer implements Dereferencer
     private $cache;
 
     /**
-     * @param CoreDereferencer $dereferencer
-     * @param CacheInterface   $cache
-     * @param bool             $cacheLoaders
+     * @param Dereferencer   $dereferencer
+     * @param CacheInterface $cache
+     * @param bool           $cacheLoaders
      */
-    public function __construct(CoreDereferencer $dereferencer, CacheInterface $cache, $cacheLoaders = true)
+    public function __construct(Dereferencer $dereferencer, CacheInterface $cache, $cacheLoaders = true)
     {
         $this->dereferencer = $dereferencer;
         $this->cache        = $cache;

@@ -2,14 +2,14 @@
 
 namespace League\JsonReference\Test;
 
-use League\JsonReference\CoreDereferencer;
+use League\JsonReference\Dereferencer;
 use League\JsonReference\Reference;
 
 class ReferenceTest extends \PHPUnit_Framework_TestCase
 {
     function test_it_can_proxy_property_access()
     {
-        Reference::setDereferencerInstance(new CoreDereferencer());
+        Reference::setDereferencerInstance(new Dereferencer());
         $ref = new Reference('#/obj', '', json_decode('{"obj": { "a": "1", "b": "2"} }'));
         $this->assertSame('1', $ref->a);
         $this->assertSame('2', $ref->b);
@@ -20,14 +20,14 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
      */
     function test_it_throws_when_accessing_undefined_properties()
     {
-        Reference::setDereferencerInstance(new CoreDereferencer());
+        Reference::setDereferencerInstance(new Dereferencer());
         $ref = new Reference('#/obj', '', json_decode('{"obj": { "a": "1", "b": "2"} }'));
         $ref->c;
     }
 
     function test_it_can_be_iterate_objects()
     {
-        Reference::setDereferencerInstance(new CoreDereferencer());
+        Reference::setDereferencerInstance(new Dereferencer());
         $ref = new Reference('#/obj', '', json_decode('{"obj": { "a": "1", "b": "2"} }'));
         $vars = [];
         foreach ($ref as $k => $v) {
@@ -38,7 +38,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
 
     function test_it_can_be_iterate_arrays()
     {
-        Reference::setDereferencerInstance(new CoreDereferencer());
+        Reference::setDereferencerInstance(new Dereferencer());
         $ref = new Reference('#/arr', '', json_decode('{"arr": [1,2,3] }'));
         $vars = [];
         foreach ($ref as $k => $v) {
@@ -52,7 +52,7 @@ class ReferenceTest extends \PHPUnit_Framework_TestCase
      */
     function test_it_throws_when_iterating_non_iterable_types()
     {
-        Reference::setDereferencerInstance(new CoreDereferencer());
+        Reference::setDereferencerInstance(new Dereferencer());
         $ref = new Reference('#/inv', '', json_decode('{"inv": 1 }'));
         foreach ($ref as $k => $v) {
 

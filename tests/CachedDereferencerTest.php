@@ -5,7 +5,7 @@ namespace League\JsonReference\Test;
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
 use League\JsonReference\CachedDereferencer;
-use League\JsonReference\CoreDereferencer;
+use League\JsonReference\Dereferencer;
 
 class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +13,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
     {
         $cache  = new ArrayCachePool();
         $cache  = new SimpleCacheBridge($cache);
-        $deref  = new CachedDereferencer(new CoreDereferencer(), $cache);
+        $deref  = new CachedDereferencer(new Dereferencer(), $cache);
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
         $result = $deref->dereference($path);
 
@@ -24,7 +24,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
     {
         $cache  = new ArrayCachePool();
         $cache  = new SimpleCacheBridge($cache);
-        $deref  = new CachedDereferencer(new CoreDereferencer(), $cache);
+        $deref  = new CachedDereferencer(new Dereferencer(), $cache);
         $schema = json_decode(file_get_contents(__DIR__ . '/fixtures/inline-ref.json'));
         $result = $deref->dereference($schema);
 
@@ -35,7 +35,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
     {
         $cache  = new ArrayCachePool();
         $cache  = new SimpleCacheBridge($cache);
-        $deref  = new CachedDereferencer(new CoreDereferencer(), $cache);
+        $deref  = new CachedDereferencer(new Dereferencer(), $cache);
         $schema = json_decode(file_get_contents(__DIR__ . '/fixtures/inline-ref.json'));
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
         $result = $deref->dereference($schema, $path);
@@ -47,7 +47,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
     {
         $cache  = new ArrayCachePool();
         $cache  = new SimpleCacheBridge($cache);
-        $deref  = new CachedDereferencer(new CoreDereferencer(), $cache);
+        $deref  = new CachedDereferencer(new Dereferencer(), $cache);
         $cache->set(sha1($path = 'file://the-schema'), $schema = json_decode('{"hello": "world"}'));
         $result = $deref->dereference($path);
         $this->assertSame($schema, $result);
