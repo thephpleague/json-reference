@@ -3,6 +3,8 @@
 namespace League\JsonReference\Loaders;
 
 use League\JsonReference;
+use League\JsonReference\JsonDecoder;
+use League\JsonReference\JsonDecoders\StandardJsonDecoder;
 use League\JsonReference\Loader;
 
 final class CurlWebLoader implements Loader
@@ -18,12 +20,19 @@ final class CurlWebLoader implements Loader
     private $curlOptions;
 
     /**
-     * @param string $prefix
-     * @param array  $curlOptions
+     * @var JsonDecoder
      */
-    public function __construct($prefix, array $curlOptions = null)
+    private $jsonDecoder;
+
+    /**
+     * @param string      $prefix
+     * @param array       $curlOptions
+     * @param JsonDecoder $jsonDecoder
+     */
+    public function __construct($prefix, array $curlOptions = null, JsonDecoder $jsonDecoder = null)
     {
         $this->prefix      = $prefix;
+        $this->jsonDecoder = $jsonDecoder ?: new StandardJsonDecoder();
         $this->setCurlOptions($curlOptions);
     }
 
@@ -42,7 +51,7 @@ final class CurlWebLoader implements Loader
             throw JsonReference\SchemaLoadingException::create($uri);
         }
 
-        return JsonReference\json_decode($response, false, 512, JSON_BIGINT_AS_STRING);
+        return $this->jsonDecoder->decode($response);
     }
 
     /**

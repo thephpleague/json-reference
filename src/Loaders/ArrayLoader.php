@@ -2,7 +2,8 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference;
+use League\JsonReference\JsonDecoder;
+use League\JsonReference\JsonDecoders\StandardJsonDecoder;
 use League\JsonReference\Loader;
 use League\JsonReference\SchemaLoadingException;
 
@@ -14,12 +15,19 @@ final class ArrayLoader implements Loader
     private $schemas;
 
     /**
-     * @param array $schemas A map of schemas where path => schema.  The schema should be a string or the
-     *                       object resulting from a json_decode call.
+     * @var JsonDecoder
      */
-    public function __construct(array $schemas)
+    private $jsonDecoder;
+
+    /**
+     * @param array       $schemas      A map of schemas where path => schema.The schema should be a string or the
+     *                                  object resulting from a json_decode call.
+     * @param JsonDecoder $jsonDecoder
+     */
+    public function __construct(array $schemas, JsonDecoder $jsonDecoder = null)
     {
-        $this->schemas = $schemas;
+        $this->schemas     = $schemas;
+        $this->jsonDecoder = $jsonDecoder ?: new StandardJsonDecoder();
     }
 
     /**
@@ -34,7 +42,7 @@ final class ArrayLoader implements Loader
         $schema = $this->schemas[$path];
 
         if (is_string($schema)) {
-            return JsonReference\json_decode($schema, false, 512, JSON_BIGINT_AS_STRING);
+            return $this->jsonDecoder->decode($schema);
         } elseif (is_object($schema)) {
             return $schema;
         } else {

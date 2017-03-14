@@ -31,13 +31,6 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    function test_json_decode_throws_on_invalid_json()
-    {
-        $this->setExpectedException(\InvalidArgumentException::class);
-        $json = 'some-bad-data';
-        \League\JsonReference\json_decode($json);
-    }
-
     function test_schema_extract_extracts_matches()
     {
         $schema = json_decode('{ "properties": { "money": { "enum": [ { "currency": "USD" } ] } } }');

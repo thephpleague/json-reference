@@ -2,7 +2,8 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference;
+use League\JsonReference\JsonDecoder;
+use League\JsonReference\JsonDecoders\StandardJsonDecoder;
 use League\JsonReference\Loader;
 use League\JsonReference\SchemaLoadingException;
 
@@ -14,11 +15,18 @@ final class FileGetContentsWebLoader implements Loader
     private $prefix;
 
     /**
-     * @param string $prefix
+     * @var JsonDecoder
      */
-    public function __construct($prefix)
+    private $jsonDecoder;
+
+    /**
+     * @param string      $prefix
+     * @param JsonDecoder $jsonDecoder
+     */
+    public function __construct($prefix, JsonDecoder $jsonDecoder = null)
     {
-        $this->prefix = $prefix;
+        $this->prefix      = $prefix;
+        $this->jsonDecoder = $jsonDecoder ?: new StandardJsonDecoder();
     }
 
     /**
@@ -37,6 +45,6 @@ final class FileGetContentsWebLoader implements Loader
             throw SchemaLoadingException::create($uri);
         }
 
-        return JsonReference\json_decode($response, false, 512, JSON_BIGINT_AS_STRING);
+        return $this->jsonDecoder->decode($response);
     }
 }

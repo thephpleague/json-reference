@@ -2,12 +2,26 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference;
+use League\JsonReference\JsonDecoder;
+use League\JsonReference\JsonDecoders\StandardJsonDecoder;
 use League\JsonReference\Loader;
 use League\JsonReference\SchemaLoadingException;
 
 final class FileLoader implements Loader
 {
+    /**
+     * @var JsonDecoder
+     */
+    private $jsonDecoder;
+
+    /**
+     * @param JsonDecoder $jsonDecoder
+     */
+    public function __construct(JsonDecoder $jsonDecoder = null)
+    {
+        $this->jsonDecoder = $jsonDecoder ?: new StandardJsonDecoder();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -17,6 +31,6 @@ final class FileLoader implements Loader
             throw SchemaLoadingException::notFound($path);
         }
 
-        return JsonReference\json_decode(file_get_contents($path), false, 512, JSON_BIGINT_AS_STRING);
+        return $this->jsonDecoder->decode(file_get_contents($path));
     }
 }
