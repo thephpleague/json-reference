@@ -2,7 +2,7 @@
 
 namespace League\JsonReference\ScopeResolvers;
 
-use League\JsonReference\Pointer;
+use function League\JsonReference\pointer;
 use function League\JsonReference\pointer_push;
 use function League\JsonReference\resolve_uri;
 use League\JsonReference\ScopeResolver;
@@ -17,6 +17,9 @@ final class JsonSchemaScopeResolver implements ScopeResolver
      */
     private $keyword;
 
+    /**
+     * @param string $keyword
+     */
     public function __construct($keyword)
     {
         $this->keyword = $keyword;
@@ -27,7 +30,7 @@ final class JsonSchemaScopeResolver implements ScopeResolver
      */
     public function resolve($schema, $currentPointer, $currentScope)
     {
-        $pointer     = new Pointer($schema);
+        $pointer     = pointer($schema);
         $currentPath = '';
 
         foreach (explode('/', $currentPointer) as $segment) {

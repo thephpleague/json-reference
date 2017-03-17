@@ -204,9 +204,9 @@ function schema_extract($schema, callable $callback, $pointer = '')
 function merge_ref($schema, $resolvedRef, $path = '')
 {
     if ($path === '') {
-        unset($schema->{'$ref'});
+        pointer($schema)->remove('$ref');
         foreach ($resolvedRef as $prop => $value) {
-            pointer($schema)->set('/' . $prop, $value);
+            pointer($schema)->set($prop, $value);
         }
         return;
     }

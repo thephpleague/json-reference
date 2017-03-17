@@ -93,9 +93,10 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     public function __get($property)
     {
-        $schema = $this->resolve();
-        if (isset($schema->$property)) {
-            return $schema->$property;
+        $schema  = $this->resolve();
+        $pointer = pointer($schema);
+        if ($pointer->has($property)) {
+            return $pointer->get($property);
         }
 
         throw new \InvalidArgumentException(sprintf('Unknown property "%s"', $property));

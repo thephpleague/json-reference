@@ -129,6 +129,30 @@ class PointerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('baz', $pointer->get('//bar'));
     }
 
+    function test_remove_removes_objects()
+    {
+        $document = $this->getDocument();
+        $pointer = new Pointer($document);
+        $pointer->remove('/nested/0');
+        $this->assertCount(1, $document->nested);
+    }
+
+    function test_remove_removes_arrays()
+    {
+        $document = $this->getDocument();
+        $pointer = new Pointer($document);
+        $pointer->remove('/foo');
+        $this->assertFalse(property_exists($document, 'foo'));
+    }
+
+    function test_remove_removes_properties()
+    {
+        $document = $this->getDocument();
+        $pointer = new Pointer($document);
+        $pointer->remove('/a');
+        $this->assertFalse(property_exists($document, 'a'));
+    }
+
     protected function assertCorrectJson($expected, $actual, $message = '')
     {
         $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($actual), $message);
