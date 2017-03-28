@@ -25,7 +25,8 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
         $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json#/properties/billing_address';
         $result = $deref->dereference($path);
 
-        $expected = (new Pointer(json_decode(file_get_contents(__DIR__ . '/fixtures/inline-ref.json'))))
+        $expected = json_decode(file_get_contents(__DIR__ . '/fixtures/inline-ref.json'));
+        $expected = (new Pointer($expected))
             ->get('/definitions/address');
 
         $this->assertEquals($expected, $result);

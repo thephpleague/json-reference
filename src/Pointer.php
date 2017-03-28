@@ -20,9 +20,9 @@ final class Pointer
     /**
      * @param object|array $json
      */
-    public function __construct($json)
+    public function __construct(&$json)
     {
-        $this->json = $json;
+        $this->json = &$json;
     }
 
     /**
@@ -119,7 +119,7 @@ final class Pointer
      */
     private function &getTarget(array $pointer)
     {
-        $target = $this->json;
+        $target = &$this->json;
 
         foreach ($pointer as $segment) {
             if (is_array($target)) {
@@ -151,7 +151,12 @@ final class Pointer
             throw InvalidPointerException::nonexistentValue($reference);
         }
 
-        if (is_array($json)) {
+        if ($json instanceof  Reference) {
+            if (!$json->has($reference)) {
+                throw InvalidPointerException::nonexistentValue($reference);
+            }
+            $json = $json->get($reference);
+        } elseif (is_array($json)) {
             if (!array_key_exists($reference, $json)) {
                 throw InvalidPointerException::nonexistentValue($reference);
             }

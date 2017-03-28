@@ -9,7 +9,7 @@ use Sabre\Uri;
  *
  * @return Pointer
  */
-function pointer($json)
+function pointer(&$json)
 {
    return new Pointer($json);
 }
@@ -179,10 +179,14 @@ function schema_extract($schema, callable $callback, $pointer = '')
                 break;
             case is_array($value):
                 foreach ($value as $k => $v) {
-                    $matches = array_merge(
-                        $matches,
-                        schema_extract($v, $callback, pointer_push($pointer, $keyword, $k))
-                    );
+                    if ($callback($k, $v)) {
+                        $matches[pointer_push($pointer, $keyword)] = $v;
+                    } else {
+                        $matches = array_merge(
+                            $matches,
+                            schema_extract($v, $callback, pointer_push($pointer, $keyword, $k))
+                        );
+                    }
                 }
                 break;
             case $callback($keyword, $value):
@@ -208,11 +212,12 @@ function merge_ref($schema, $resolvedRef, $path = '')
         foreach ($resolvedRef as $prop => $value) {
             pointer($schema)->set($prop, $value);
         }
-        return;
+        return $schema;
     }
 
     $pointer = new Pointer($schema);
     if ($pointer->has($path)) {
         $pointer->set($path, $resolvedRef);
     }
+    return $schema;
 }

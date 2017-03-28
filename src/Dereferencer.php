@@ -58,7 +58,7 @@ final class Dereferencer implements DereferencerInterface
     {
         return $this->crawl($schema, $uri, function ($schema, $pointer, $ref, $scope) {
             $resolved = new Reference($ref, $scope, is_internal_ref($ref) ? $schema : null);
-            merge_ref($schema, $resolved, $pointer);
+            return merge_ref($schema, $resolved, $pointer);
         });
     }
 
@@ -101,7 +101,7 @@ final class Dereferencer implements DereferencerInterface
         foreach (schema_extract($schema, 'League\JsonReference\is_ref') as $pointer => $ref) {
             $scope = $this->scopeResolver->resolve($schema, $pointer, $uri);
 
-            $resolver($schema, $pointer, $ref, $scope);
+            $schema = $resolver($schema, $pointer, $ref, $scope);
         }
 
         return $schema;
