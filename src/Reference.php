@@ -103,6 +103,34 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     }
 
     /**
+     * @param string $property
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function get($property)
+    {
+        if (!$this->has($property)) {
+            throw new \InvalidArgumentException(sprintf('Unknown property "%s"', $property));
+        }
+
+        $schema = $this->resolve();
+        return pointer($schema)->get($property);
+    }
+
+    /**
+     * @param string $property
+     *
+     * @return bool
+     */
+    public function has($property)
+    {
+        $schema = $this->resolve();
+        return pointer($schema)->has($property);
+    }
+
+    /**
      * Retrieve an external iterator
      * @link  http://php.net/manual/en/iteratoraggregate.getiterator.php
      * @return \Traversable An instance of an object implementing <b>Iterator</b> or

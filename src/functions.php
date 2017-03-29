@@ -203,7 +203,7 @@ function schema_extract($schema, callable $callback, $pointer = '')
  * @param object $resolvedRef
  * @param string $path
  *
- * @return void
+ * @return object
  */
 function merge_ref($schema, $resolvedRef, $path = '')
 {
