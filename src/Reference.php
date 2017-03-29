@@ -75,8 +75,8 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
         }
 
         $pointer = new Pointer($this->schema);
-        if (is_internal_ref($this->ref) && $pointer->has(ltrim($this->ref, '#'))) {
-            return $this->resolved = $pointer->get(ltrim($this->ref, '#'));
+        if (is_internal_ref($this->ref) && $pointer->has($this->ref)) {
+            return $this->resolved = $pointer->get($this->ref);
         }
 
         return $this->dereferencer()->dereference(resolve_uri($this->ref, $this->scope));

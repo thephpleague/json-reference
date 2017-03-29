@@ -25,13 +25,13 @@ class PointerTest extends \PHPUnit_Framework_TestCase
         $this->assertCorrectJson(7, $pointer->get('/ '));
         $this->assertCorrectJson(8, $pointer->get('/m~0n'));
         // url encoded
-        $this->assertCorrectJson(2, $pointer->get('/c%25d'));
-        $this->assertCorrectJson(3, $pointer->get('/e^f'));
-        $this->assertCorrectJson(4, $pointer->get('/g%7Ch'));
-        $this->assertCorrectJson(5, $pointer->get('/i%5Cj'));
-        $this->assertCorrectJson(6, $pointer->get("/k%22l"));
-        $this->assertCorrectJson(7, $pointer->get('/%20'));
-        $this->assertCorrectJson(8, $pointer->get('/m~0n'));
+        $this->assertCorrectJson(2, $pointer->get('#/c%25d'));
+        $this->assertCorrectJson(3, $pointer->get('#/e^f'));
+        $this->assertCorrectJson(4, $pointer->get('#/g%7Ch'));
+        $this->assertCorrectJson(5, $pointer->get('#/i%5Cj'));
+        $this->assertCorrectJson(6, $pointer->get("#/k%22l"));
+        $this->assertCorrectJson(7, $pointer->get('#/%20'));
+        $this->assertCorrectJson(8, $pointer->get('#/m~0n'));
     }
 
     function test_set()

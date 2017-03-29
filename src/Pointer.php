@@ -191,6 +191,12 @@ final class Pointer
             throw InvalidPointerException::invalidType(gettype($pointer));
         }
 
+        // If the pointer is a url fragment, it needs to be url decoded.
+        if (strpos($pointer, '#') === 0) {
+            $pointer = urldecode(substr($pointer, 1));
+        }
+
+        // For convenience add the beginning slash if it's missing.
         if ($pointer !== '' && strpos($pointer, '/') !== 0) {
             $pointer = '/' . $pointer;
         }
@@ -199,10 +205,7 @@ final class Pointer
             function ($segment) {
                 return str_replace('~0', '~', str_replace('~1', '/', $segment));
             },
-            array_map(
-                'urldecode',
-                array_slice(explode('/', $pointer), 1)
-            )
+            array_slice(explode('/', $pointer), 1)
         );
     }
 }
