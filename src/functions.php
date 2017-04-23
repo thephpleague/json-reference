@@ -11,7 +11,7 @@ use Sabre\Uri;
  */
 function pointer(&$json)
 {
-   return new Pointer($json);
+    return new Pointer($json);
 }
 
 /**

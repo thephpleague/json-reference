@@ -104,7 +104,7 @@ final class Pointer
         $target  = &$this->getTarget($pointer);
 
         if (is_array($target)) {
-            unset ($target[$remove]);
+            unset($target[$remove]);
         } elseif (is_object($target)) {
             unset($target->$remove);
         } else {
