@@ -16,6 +16,11 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     private static $dereferencer;
 
     /**
+     * @var \League\JsonReference\ReferenceSerializerInterface|null
+     */
+    private $serializer;
+
+    /**
      * @var string
      */
     private $ref;
@@ -36,15 +41,17 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     private $resolved;
 
     /**
-     * @param string $ref
-     * @param string $scope
-     * @param null   $schema
+     * @param \League\JsonReference\ReferenceSerializerInterface $serializer
+     * @param string                                             $ref
+     * @param string                                             $scope
+     * @param null                                               $schema
      */
-    public function __construct($ref, $scope = '', $schema = null)
+    public function __construct(ReferenceSerializerInterface $serializer, $ref, $scope = '', $schema = null)
     {
-        $this->ref    = $ref;
-        $this->scope  = $scope;
-        $this->schema = $schema;
+        $this->ref        = $ref;
+        $this->scope      = $scope;
+        $this->schema     = $schema;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -60,7 +67,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     public function jsonSerialize()
     {
-        return ['$ref' => $this->ref];
+        return $this->serializer->serialize($this);
     }
 
     /**
@@ -128,6 +135,30 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     {
         $schema = $this->resolve();
         return pointer($schema)->has($property);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @return string
+     */
+    public function getScope()
+    {
+        return $this->scope;
+    }
+
+    /**
+     * @return object|null
+     */
+    public function getSchema()
+    {
+        return $this->schema;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace League\JsonReference;
 
+use League\JsonReference\ReferenceSerializers\SafeReferenceSerializer;
 use League\JsonReference\ScopeResolvers\JsonSchemaScopeResolver;
 use League\JsonReference\ScopeResolvers\NullScopeResolver;
 
@@ -18,15 +19,23 @@ final class Dereferencer implements DereferencerInterface
     private $scopeResolver;
 
     /**
+     * @var ReferenceSerializerInterface
+     */
+    private $referenceSerializer;
+
+    /**
      * Create a new Dereferencer.
      *
-     * @param ScopeResolverInterface $scopeResolver
-     * @param LoaderManager          $loaderManager
+     * @param ScopeResolverInterface                             $scopeResolver
+     * @param \League\JsonReference\ReferenceSerializerInterface $referenceSerializer
      */
-    public function __construct(ScopeResolverInterface $scopeResolver = null, LoaderManager $loaderManager = null)
-    {
-        $this->loaderManager = $loaderManager ?: new LoaderManager();
-        $this->scopeResolver = $scopeResolver ?: new NullScopeResolver();
+    public function __construct(
+        ScopeResolverInterface $scopeResolver = null,
+        ReferenceSerializerInterface $referenceSerializer = null
+    ) {
+        $this->scopeResolver       = $scopeResolver ?: new NullScopeResolver();
+        $this->referenceSerializer = $referenceSerializer ?: new SafeReferenceSerializer();
+        $this->loaderManager       = new LoaderManager();
 
         Reference::setDereferencerInstance($this);
     }
@@ -57,7 +66,12 @@ final class Dereferencer implements DereferencerInterface
     public function dereference($schema, $uri = '')
     {
         return $this->crawl($schema, $uri, function ($schema, $pointer, $ref, $scope) {
-            $resolved = new Reference($ref, $scope, is_internal_ref($ref) ? $schema : null);
+            $resolved = new Reference(
+                $this->referenceSerializer,
+                $ref,
+                $scope,
+                is_internal_ref($ref) ? $schema : null
+            );
             return merge_ref($schema, $resolved, $pointer);
         });
     }
@@ -85,6 +99,45 @@ final class Dereferencer implements DereferencerInterface
     public function getLoaderManager()
     {
         return $this->loaderManager;
+    }
+
+    /**
+     * @param \League\JsonReference\LoaderManager $loaderManager
+     *
+     * @return \League\JsonReference\Dereferencer
+     */
+    public function withLoaderManager(LoaderManager $loaderManager)
+    {
+        $dereferencer                = clone $this;
+        $dereferencer->loaderManager = $loaderManager;
+
+        return $dereferencer;
+    }
+
+    /**
+     * @param \League\JsonReference\ScopeResolverInterface $scopeResolver
+     *
+     * @return \League\JsonReference\Dereferencer
+     */
+    public function withScopeResolver(ScopeResolverInterface $scopeResolver)
+    {
+        $dereferencer                = clone $this;
+        $dereferencer->scopeResolver = $scopeResolver;
+
+        return $dereferencer;
+    }
+
+    /**
+     * @param \League\JsonReference\ReferenceSerializerInterface $referenceSerializer
+     *
+     * @return \League\JsonReference\Dereferencer
+     */
+    public function withReferenceSerializer(ReferenceSerializerInterface $referenceSerializer)
+    {
+        $dereferencer                      = clone $this;
+        $dereferencer->referenceSerializer = $referenceSerializer;
+
+        return $dereferencer;
     }
 
     /**
