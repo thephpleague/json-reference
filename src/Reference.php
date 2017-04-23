@@ -16,11 +16,6 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     private static $dereferencer;
 
     /**
-     * @var \League\JsonReference\ReferenceSerializerInterface|null
-     */
-    private $serializer;
-
-    /**
      * @var string
      */
     private $ref;
@@ -41,17 +36,15 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     private $resolved;
 
     /**
-     * @param \League\JsonReference\ReferenceSerializerInterface $serializer
      * @param string                                             $ref
      * @param string                                             $scope
      * @param null                                               $schema
      */
-    public function __construct(ReferenceSerializerInterface $serializer, $ref, $scope = '', $schema = null)
+    public function __construct($ref, $scope = '', $schema = null)
     {
         $this->ref        = $ref;
         $this->scope      = $scope;
         $this->schema     = $schema;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -67,7 +60,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     public function jsonSerialize()
     {
-        return $this->serializer->serialize($this);
+        return $this->dereferencer()->getReferenceSerializer()->serialize($this);
     }
 
     /**

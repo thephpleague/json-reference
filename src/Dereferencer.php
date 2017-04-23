@@ -66,12 +66,7 @@ final class Dereferencer implements DereferencerInterface
     public function dereference($schema, $uri = '')
     {
         return $this->crawl($schema, $uri, function ($schema, $pointer, $ref, $scope) {
-            $resolved = new Reference(
-                $this->referenceSerializer,
-                $ref,
-                $scope,
-                is_internal_ref($ref) ? $schema : null
-            );
+            $resolved = new Reference($ref, $scope, is_internal_ref($ref) ? $schema : null);
             return merge_ref($schema, $resolved, $pointer);
         });
     }
@@ -106,12 +101,11 @@ final class Dereferencer implements DereferencerInterface
      *
      * @return \League\JsonReference\Dereferencer
      */
-    public function withLoaderManager(LoaderManager $loaderManager)
+    public function setLoaderManager(LoaderManager $loaderManager)
     {
-        $dereferencer                = clone $this;
-        $dereferencer->loaderManager = $loaderManager;
+        $this->loaderManager = $loaderManager;
 
-        return $dereferencer;
+        return $this;
     }
 
     /**
@@ -119,12 +113,19 @@ final class Dereferencer implements DereferencerInterface
      *
      * @return \League\JsonReference\Dereferencer
      */
-    public function withScopeResolver(ScopeResolverInterface $scopeResolver)
+    public function setScopeResolver(ScopeResolverInterface $scopeResolver)
     {
-        $dereferencer                = clone $this;
-        $dereferencer->scopeResolver = $scopeResolver;
+        $this->scopeResolver = $scopeResolver;
 
-        return $dereferencer;
+        return $this;
+    }
+
+    /**
+     * @return \League\JsonReference\ReferenceSerializerInterface
+     */
+    public function getReferenceSerializer()
+    {
+        return $this->referenceSerializer;
     }
 
     /**
@@ -132,12 +133,11 @@ final class Dereferencer implements DereferencerInterface
      *
      * @return \League\JsonReference\Dereferencer
      */
-    public function withReferenceSerializer(ReferenceSerializerInterface $referenceSerializer)
+    public function setReferenceSerializer(ReferenceSerializerInterface $referenceSerializer)
     {
-        $dereferencer                      = clone $this;
-        $dereferencer->referenceSerializer = $referenceSerializer;
+        $this->referenceSerializer = $referenceSerializer;
 
-        return $dereferencer;
+        return $this;
     }
 
     /**
