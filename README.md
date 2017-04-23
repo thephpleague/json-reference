@@ -6,6 +6,8 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Documentation][ico-docs]][link-docs]
 
+A library for working with JSON References.
+
 ## Install
 
 ### Via Composer
@@ -27,6 +29,14 @@ Please see [CHANGELOG](CHANGELOG.md) for more information about what has changed
 ``` bash
 $ composer test-server
 $ composer test
+```
+
+## Benchmarks
+
+The benchmarks require a local redis server to be running on localhost at the default port.
+
+```bash
+$ composer bench
 ```
 
 ## Contributing
