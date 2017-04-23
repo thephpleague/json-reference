@@ -15,16 +15,6 @@ final class InvalidPointerException extends \InvalidArgumentException
     }
 
     /**
-     * @param string $character
-     *
-     * @return static
-     */
-    public static function invalidFirstCharacter($character)
-    {
-        return new static(sprintf('A pointer must start with "/", got "%s"', $character));
-    }
-
-    /**
      * @param string $value
      *
      * @return static
