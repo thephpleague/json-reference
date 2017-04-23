@@ -2,10 +2,10 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference\Loader;
+use League\JsonReference\LoaderInterface;
 use Psr\SimpleCache\CacheInterface;
 
-class CachedLoader implements Loader
+class CachedLoader implements LoaderInterface
 {
     /**
      * @var CacheInterface
@@ -13,15 +13,15 @@ class CachedLoader implements Loader
     private $cache;
 
     /**
-     * @var Loader
+     * @var LoaderInterface
      */
     private $loader;
 
     /**
-     * @param CacheInterface $cache
-     * @param Loader         $loader
+     * @param CacheInterface  $cache
+     * @param LoaderInterface $loader
      */
-    public function __construct(CacheInterface $cache, Loader $loader)
+    public function __construct(CacheInterface $cache, LoaderInterface $loader)
     {
         $this->cache  = $cache;
         $this->loader = $loader;

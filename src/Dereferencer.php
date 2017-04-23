@@ -13,17 +13,17 @@ final class Dereferencer implements DereferencerInterface
     private $loaderManager;
 
     /**
-     * @var ScopeResolver
+     * @var ScopeResolverInterface
      */
     private $scopeResolver;
 
     /**
      * Create a new Dereferencer.
      *
-     * @param ScopeResolver $scopeResolver
-     * @param LoaderManager $loaderManager
+     * @param ScopeResolverInterface $scopeResolver
+     * @param LoaderManager          $loaderManager
      */
-    public function __construct(ScopeResolver $scopeResolver = null, LoaderManager $loaderManager = null)
+    public function __construct(ScopeResolverInterface $scopeResolver = null, LoaderManager $loaderManager = null)
     {
         $this->loaderManager = $loaderManager ?: new LoaderManager();
         $this->scopeResolver = $scopeResolver ?: new NullScopeResolver();

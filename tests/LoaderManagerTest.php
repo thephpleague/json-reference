@@ -2,7 +2,7 @@
 
 namespace League\JsonReference\Test;
 
-use League\JsonReference\Loader;
+use League\JsonReference\LoaderInterface;
 use League\JsonReference\LoaderManager;
 use League\JsonReference\Loaders\ArrayLoader;
 
@@ -13,11 +13,11 @@ class LoaderManagerTest extends \PHPUnit_Framework_TestCase
         $manager = new LoaderManager();
         $loaders = $manager->getLoaders();
         $this->assertArrayHasKey('file', $loaders);
-        $this->assertInstanceOf(Loader::class, $loaders['file']);
+        $this->assertInstanceOf(LoaderInterface::class, $loaders['file']);
         $this->assertArrayHasKey('http', $loaders);
-        $this->assertInstanceOf(Loader::class, $loaders['http']);
+        $this->assertInstanceOf(LoaderInterface::class, $loaders['http']);
         $this->assertArrayHasKey('https', $loaders);
-        $this->assertInstanceOf(Loader::class, $loaders['https']);
+        $this->assertInstanceOf(LoaderInterface::class, $loaders['https']);
     }
 
     function test_getLoader_throws_when_the_loader_does_not_exist()

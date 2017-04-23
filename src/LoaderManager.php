@@ -9,12 +9,12 @@ use League\JsonReference\Loaders\FileLoader;
 final class LoaderManager
 {
     /**
-     * @var Loader[]
+     * @var LoaderInterface[]
      */
     private $loaders = [];
 
     /**
-     * @param Loader[] $loaders
+     * @param LoaderInterface[] $loaders
      */
     public function __construct(array $loaders = [])
     {
@@ -30,12 +30,12 @@ final class LoaderManager
     }
 
     /**
-     * Register a Loader for the given prefix.
+     * Register a LoaderInterface for the given prefix.
      *
-     * @param string $prefix
-     * @param Loader $loader
+     * @param string          $prefix
+     * @param LoaderInterface $loader
      */
-    public function registerLoader($prefix, Loader $loader)
+    public function registerLoader($prefix, LoaderInterface $loader)
     {
         $this->loaders[$prefix] = $loader;
     }
@@ -43,7 +43,7 @@ final class LoaderManager
     /**
      * Get all registered loaders, keyed by the prefix they are registered to load schemas for.
      *
-     * @return Loader[]
+     * @return LoaderInterface[]
      */
     public function getLoaders()
     {
@@ -55,7 +55,7 @@ final class LoaderManager
      *
      * @param string $prefix
      *
-     * @return Loader
+     * @return LoaderInterface
      * @throws \InvalidArgumentException
      */
     public function getLoader($prefix)

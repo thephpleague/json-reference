@@ -2,9 +2,9 @@
 
 namespace League\JsonReference\ScopeResolvers;
 
-use League\JsonReference\ScopeResolver;
+use League\JsonReference\ScopeResolverInterface;
 
-final class NullScopeResolver implements ScopeResolver
+final class NullScopeResolver implements ScopeResolverInterface
 {
     /**
      * {@inheritdoc}

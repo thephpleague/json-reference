@@ -2,10 +2,10 @@
 
 namespace League\JsonReference\JsonDecoders;
 
-use League\JsonReference\JsonDecoder;
+use League\JsonReference\JsonDecoderInterface;
 use League\JsonReference\JsonDecodingException;
 
-class StandardJsonDecoder implements JsonDecoder
+class JsonDecoder implements JsonDecoderInterface
 {
     /**
      * @var bool

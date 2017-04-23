@@ -2,12 +2,12 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference\JsonDecoder;
-use League\JsonReference\JsonDecoders\StandardJsonDecoder;
-use League\JsonReference\Loader;
+use League\JsonReference\JsonDecoderInterface;
+use League\JsonReference\JsonDecoders\JsonDecoder;
+use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
 
-final class FileGetContentsWebLoader implements Loader
+final class FileGetContentsWebLoader implements LoaderInterface
 {
     /**
      * @var string
@@ -15,18 +15,18 @@ final class FileGetContentsWebLoader implements Loader
     private $prefix;
 
     /**
-     * @var JsonDecoder
+     * @var JsonDecoderInterface
      */
     private $jsonDecoder;
 
     /**
-     * @param string      $prefix
-     * @param JsonDecoder $jsonDecoder
+     * @param string               $prefix
+     * @param JsonDecoderInterface $jsonDecoder
      */
-    public function __construct($prefix, JsonDecoder $jsonDecoder = null)
+    public function __construct($prefix, JsonDecoderInterface $jsonDecoder = null)
     {
         $this->prefix      = $prefix;
-        $this->jsonDecoder = $jsonDecoder ?: new StandardJsonDecoder();
+        $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
     }
 
     /**

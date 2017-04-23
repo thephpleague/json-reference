@@ -2,7 +2,7 @@
 
 namespace League\JsonReference;
 
-interface Loader
+interface LoaderInterface
 {
     /**
      * Load the json schema from the given path.

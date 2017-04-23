@@ -5,9 +5,9 @@ namespace League\JsonReference\ScopeResolvers;
 use function League\JsonReference\pointer;
 use function League\JsonReference\pointer_push;
 use function League\JsonReference\resolve_uri;
-use League\JsonReference\ScopeResolver;
+use League\JsonReference\ScopeResolverInterface;
 
-final class JsonSchemaScopeResolver implements ScopeResolver
+final class JsonSchemaScopeResolver implements ScopeResolverInterface
 {
     const KEYWORD_DRAFT_4 = 'id';
     const KEYWORD_DRAFT_6 = '$id';

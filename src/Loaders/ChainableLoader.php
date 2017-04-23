@@ -2,7 +2,7 @@
 
 namespace League\JsonReference\Loaders;
 
-use League\JsonReference\Loader;
+use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
 
 /**
@@ -10,23 +10,23 @@ use League\JsonReference\SchemaLoadingException;
  * attempt to load from the first loader before deferring to the second loader.
  * This is useful when you would like to use multiple loaders for the same prefix.
  */
-final class ChainableLoader implements Loader
+final class ChainableLoader implements LoaderInterface
 {
     /**
-     * @var Loader
+     * @var LoaderInterface
      */
     private $firstLoader;
 
     /**
-     * @var Loader
+     * @var LoaderInterface
      */
     private $secondLoader;
 
     /**
-     * @param \League\JsonReference\Loader $firstLoader
-     * @param \League\JsonReference\Loader $secondLoader
+     * @param \League\JsonReference\LoaderInterface $firstLoader
+     * @param \League\JsonReference\LoaderInterface $secondLoader
      */
-    public function __construct(Loader $firstLoader, Loader $secondLoader)
+    public function __construct(LoaderInterface $firstLoader, LoaderInterface $secondLoader)
     {
         $this->firstLoader  = $firstLoader;
         $this->secondLoader = $secondLoader;

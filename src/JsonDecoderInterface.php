@@ -2,7 +2,7 @@
 
 namespace League\JsonReference;
 
-interface JsonDecoder
+interface JsonDecoderInterface
 {
     /**
      * @param string $json

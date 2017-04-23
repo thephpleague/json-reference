@@ -2,7 +2,7 @@
 
 namespace League\JsonReference;
 
-interface ScopeResolver
+interface ScopeResolverInterface
 {
     /**
      * @param object $schema
