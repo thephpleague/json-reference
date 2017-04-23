@@ -10,7 +10,7 @@ use League\JsonReference\SchemaLoadingException;
  * attempt to load from the first loader before deferring to the second loader.
  * This is useful when you would like to use multiple loaders for the same prefix.
  */
-final class ChainableLoader implements LoaderInterface
+final class ChainedLoader implements LoaderInterface
 {
     /**
      * @var LoaderInterface
