@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Test\Loaders;
+namespace League\JsonReference\Test\Loader;
 
-use League\JsonReference\Loaders\ArrayLoader;
-use League\JsonReference\Loaders\ChainedLoader;
+use League\JsonReference\Loader\ArrayLoader;
+use League\JsonReference\Loader\ChainedLoader;
 
 class ChainableLoaderTest extends \PHPUnit_Framework_TestCase
 {

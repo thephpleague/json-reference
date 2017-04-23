@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Loaders;
+namespace League\JsonReference\Loader;
 
+use League\JsonReference\JsonDecoder\JsonDecoder;
 use League\JsonReference\JsonDecoderInterface;
-use League\JsonReference\JsonDecoders\JsonDecoder;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
 

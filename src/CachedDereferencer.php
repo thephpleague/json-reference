@@ -3,7 +3,7 @@
 namespace League\JsonReference;
 
 use Closure;
-use League\JsonReference\Loaders\CachedLoader;
+use League\JsonReference\Loader\CachedLoader;
 use Psr\SimpleCache\CacheInterface;
 
 final class CachedDereferencer implements DereferencerInterface

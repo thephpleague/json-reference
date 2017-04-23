@@ -3,7 +3,7 @@
 namespace League\JsonReference\Test;
 
 use League\JsonReference\Dereferencer;
-use League\JsonReference\Loaders\ArrayLoader;
+use League\JsonReference\Loader\ArrayLoader;
 use League\JsonReference\Pointer;
 use League\JsonReference\Reference;
 

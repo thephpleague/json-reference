@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\ScopeResolvers;
+namespace League\JsonReference\ScopeResolver;
 
+use League\JsonReference\ScopeResolverInterface;
 use function League\JsonReference\pointer;
 use function League\JsonReference\pointer_push;
 use function League\JsonReference\resolve_uri;
-use League\JsonReference\ScopeResolverInterface;
 
 final class JsonSchemaScopeResolver implements ScopeResolverInterface
 {

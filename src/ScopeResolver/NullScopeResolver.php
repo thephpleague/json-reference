@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\ScopeResolvers;
+namespace League\JsonReference\ScopeResolver;
 
 use League\JsonReference\ScopeResolverInterface;
 

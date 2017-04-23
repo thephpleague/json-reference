@@ -2,9 +2,9 @@
 
 namespace League\JsonReference;
 
-use League\JsonReference\Loaders\CurlWebLoader;
-use League\JsonReference\Loaders\FileGetContentsWebLoader;
-use League\JsonReference\Loaders\FileLoader;
+use League\JsonReference\Loader\CurlWebLoader;
+use League\JsonReference\Loader\FileGetContentsWebLoader;
+use League\JsonReference\Loader\FileLoader;
 
 final class LoaderManager
 {

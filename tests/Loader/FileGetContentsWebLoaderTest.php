@@ -1,8 +1,8 @@
 <?php
 
-namespace League\JsonReference\Test\Loaders;
+namespace League\JsonReference\Test\Loader;
 
-use League\JsonReference\Loaders\FileGetContentsWebLoader;
+use League\JsonReference\Loader\FileGetContentsWebLoader;
 
 class FileGetContentsWebLoaderTest extends \PHPUnit_Framework_TestCase
 {

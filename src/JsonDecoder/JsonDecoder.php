@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\JsonDecoders;
+namespace League\JsonReference\JsonDecoder;
 
 use League\JsonReference\JsonDecoderInterface;
 use League\JsonReference\JsonDecodingException;

@@ -1,9 +1,10 @@
 <?php
 
+namespace League\JsonReference\Test\ReferenceSerializer;
 
 use League\JsonReference\Dereferencer;
 use League\JsonReference\ReferenceSerializationException;
-use League\JsonReference\ReferenceSerializers\InlineReferenceSerializer;
+use League\JsonReference\ReferenceSerializer\InlineReferenceSerializer;
 
 class InlineReferenceSerializerTest extends \PHPUnit_Framework_TestCase
 {

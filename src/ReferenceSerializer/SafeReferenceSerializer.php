@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\ReferenceSerializers;
+namespace League\JsonReference\ReferenceSerializer;
 
 use League\JsonReference\Reference;
 use League\JsonReference\ReferenceSerializerInterface;

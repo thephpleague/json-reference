@@ -2,9 +2,9 @@
 
 namespace League\JsonReference;
 
-use League\JsonReference\ReferenceSerializers\SafeReferenceSerializer;
-use League\JsonReference\ScopeResolvers\JsonSchemaScopeResolver;
-use League\JsonReference\ScopeResolvers\NullScopeResolver;
+use League\JsonReference\ReferenceSerializer\SafeReferenceSerializer;
+use League\JsonReference\ScopeResolver\JsonSchemaScopeResolver;
+use League\JsonReference\ScopeResolver\NullScopeResolver;
 
 final class Dereferencer implements DereferencerInterface
 {

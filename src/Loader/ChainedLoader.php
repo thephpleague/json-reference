@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\Loaders;
+namespace League\JsonReference\Loader;
 
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;

@@ -2,9 +2,9 @@
 
 namespace League\JsonReference\Test;
 
+use League\JsonReference\Loader\ArrayLoader;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\LoaderManager;
-use League\JsonReference\Loaders\ArrayLoader;
 
 class LoaderManagerTest extends \PHPUnit_Framework_TestCase
 {
