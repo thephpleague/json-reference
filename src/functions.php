@@ -39,7 +39,7 @@ function escape_pointer($pointer)
 function pointer_push($pointer, ...$segments)
 {
     $segments =  array_map('League\JsonReference\escape_pointer', $segments);
-    return $pointer . '/' . implode('/', $segments);
+    return ($pointer !== '/' ? $pointer : '') . '/' . implode('/', $segments);
 }
 
 /**

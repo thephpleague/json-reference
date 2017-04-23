@@ -2,6 +2,8 @@
 
 namespace League\JsonReference\Test;
 
+use function League\JsonReference\pointer_push;
+
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
     public function testUris()
@@ -42,5 +44,10 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $matches);
         $this->assertSame('/properties/money/enum/0', array_keys($matches)[0]);
         $this->assertSame('USD', reset($matches));
+    }
+
+    function test_pointer_push_handles_root_pointers()
+    {
+        $this->assertSame('/somewhere', pointer_push('/', 'somewhere'));
     }
 }
