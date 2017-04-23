@@ -26,7 +26,11 @@ class InlineReferenceSerializerTest extends \PHPUnit_Framework_TestCase
 
     function test_it_throws_when_serializing_circular_references()
     {
-        $this->expectException(ReferenceSerializationException::class);
+        if (PHP_MAJOR_VERSION < 7) {
+            $this->expectException(\Exception::class);
+        } else {
+            $this->expectException(ReferenceSerializationException::class);
+        }
         $deref  = (new Dereferencer())->setReferenceSerializer(new InlineReferenceSerializer());
         $path   = 'file://' . __DIR__ . '/../fixtures/circular-ref-self.json';
         json_encode($deref->dereference($path));
