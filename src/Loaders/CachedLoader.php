@@ -5,7 +5,7 @@ namespace League\JsonReference\Loaders;
 use League\JsonReference\LoaderInterface;
 use Psr\SimpleCache\CacheInterface;
 
-class CachedLoader implements LoaderInterface
+final class CachedLoader implements LoaderInterface
 {
     /**
      * @var CacheInterface

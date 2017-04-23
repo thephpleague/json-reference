@@ -2,7 +2,7 @@
 
 namespace League\JsonReference;
 
-class SchemaLoadingException extends \RuntimeException
+final class SchemaLoadingException extends \RuntimeException
 {
     public static function create($path)
     {

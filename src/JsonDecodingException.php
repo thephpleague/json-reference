@@ -2,7 +2,7 @@
 
 namespace League\JsonReference;
 
-class JsonDecodingException extends \RuntimeException
+final class JsonDecodingException extends \RuntimeException
 {
 
 }

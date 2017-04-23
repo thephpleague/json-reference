@@ -2,7 +2,7 @@
 
 namespace League\JsonReference\Pointer;
 
-class InvalidPointerException extends \InvalidArgumentException
+final class InvalidPointerException extends \InvalidArgumentException
 {
     /**
      * @param string $type
