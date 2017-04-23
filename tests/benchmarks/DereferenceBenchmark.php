@@ -3,9 +3,11 @@
 namespace League\JsonReference\Bench;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Cache\Adapter\Predis\PredisCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
 use League\JsonReference\CachedDereferencer;
 use League\JsonReference\Dereferencer;
+use Predis\Client;
 
 /**
  * @Groups({"dereference"})
@@ -18,6 +20,8 @@ abstract class DereferenceBenchmark extends Benchmark
 
     protected $arrayCache;
 
+    protected $redisCache;
+
     abstract public function getSchema();
 
     public function setUp()
@@ -25,6 +29,9 @@ abstract class DereferenceBenchmark extends Benchmark
         $this->schema = $this->getSchema();
 
         $this->arrayCache  = new SimpleCacheBridge(new ArrayCachePool());
+
+        $this->redisCache = new SimpleCacheBridge(new PredisCachePool($predis = new Client()));
+        $predis->connect();
     }
 
     public function benchStandard()
@@ -37,5 +44,11 @@ abstract class DereferenceBenchmark extends Benchmark
     {
         $schema = $this->schema;
         (new CachedDereferencer(new Dereferencer(), $this->arrayCache))->dereference($schema);
+    }
+
+    public function benchRedisCache()
+    {
+        $schema = $this->schema;
+        (new CachedDereferencer(new Dereferencer(), $this->redisCache))->dereference($schema);
     }
 }

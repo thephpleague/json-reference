@@ -31,6 +31,8 @@ final class CachedDereferencer implements DereferencerInterface
         if ($cacheLoaders) {
             $this->cacheLoaders();
         }
+
+        Reference::setDereferencerInstance($this);
     }
 
     /**
@@ -88,5 +90,20 @@ final class CachedDereferencer implements DereferencerInterface
         foreach ($loaderManager->getLoaders() as $prefix => $loader) {
             $loaderManager->registerLoader($prefix, new CachedLoader($this->cache, $loader));
         }
+    }
+
+    public function getLoaderManager()
+    {
+        return $this->dereferencer->getLoaderManager();
+    }
+
+    public function getScopeResolver()
+    {
+        return $this->dereferencer->getScopeResolver();
+    }
+
+    public function getReferenceSerializer()
+    {
+        return $this->dereferencer->getReferenceSerializer();
     }
 }

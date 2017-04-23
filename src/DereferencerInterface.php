@@ -18,4 +18,19 @@ interface DereferencerInterface
      * @return object
      */
     public function dereference($schema, $uri = '');
+
+    /**
+     * @return LoaderManager
+     */
+    public function getLoaderManager();
+
+    /**
+     * @return \League\JsonReference\ScopeResolverInterface
+     */
+    public function getScopeResolver();
+
+    /**
+     * @return \League\JsonReference\ReferenceSerializerInterface
+     */
+    public function getReferenceSerializer();
 }

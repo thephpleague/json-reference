@@ -28,7 +28,8 @@
         "ext-curl": "*",
         "cache/simple-cache-bridge": "^0.1.0",
         "cache/array-adapter": "^0.4.2",
-        "phpbench/phpbench": "^0.13.0"
+        "phpbench/phpbench": "^0.13.0",
+        "cache/predis-adapter": "^0.4.0"
     },
     "autoload": {
         "psr-4": {

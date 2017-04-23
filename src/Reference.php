@@ -11,7 +11,7 @@ namespace League\JsonReference;
 final class Reference implements \JsonSerializable, \IteratorAggregate
 {
     /**
-     * @var \League\JsonReference\Dereferencer|null
+     * @var \League\JsonReference\DereferencerInterface|null
      */
     private static $dereferencer;
 
@@ -36,9 +36,9 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     private $resolved;
 
     /**
-     * @param string                                             $ref
-     * @param string                                             $scope
-     * @param null                                               $schema
+     * @param string $ref
+     * @param string $scope
+     * @param null   $schema
      */
     public function __construct($ref, $scope = '', $schema = null)
     {
@@ -180,15 +180,15 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     }
 
     /**
-     * @param \League\JsonReference\Dereferencer|null $dereferencer
+     * @param \League\JsonReference\DereferencerInterface|null $dereferencer
      */
-    public static function setDereferencerInstance(Dereferencer $dereferencer = null)
+    public static function setDereferencerInstance(DereferencerInterface $dereferencer = null)
     {
         static::$dereferencer = $dereferencer;
     }
 
     /**
-     * @return \League\JsonReference\Dereferencer
+     * @return \League\JsonReference\DereferencerInterface
      *
      * @throws \RuntimeException
      */
