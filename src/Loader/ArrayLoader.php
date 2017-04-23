@@ -20,8 +20,8 @@ final class ArrayLoader implements LoaderInterface
     private $jsonDecoder;
 
     /**
-     * @param array                $schemas      A map of schemas where path => schema.The schema should be a string or the
-     *                                  object resulting from a json_decode call.
+     * @param array                $schemas A map of schemas where path => schema.The schema should be a string or the
+     *                                      object resulting from a json_decode call.
      * @param JsonDecoderInterface $jsonDecoder
      */
     public function __construct(array $schemas, JsonDecoderInterface $jsonDecoder = null)
