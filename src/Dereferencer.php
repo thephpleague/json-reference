@@ -109,6 +109,14 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
+     * @return \League\JsonReference\ScopeResolverInterface
+     */
+    public function getScopeResolver()
+    {
+        return $this->scopeResolver;
+    }
+
+    /**
      * @param \League\JsonReference\ScopeResolverInterface $scopeResolver
      *
      * @return \League\JsonReference\Dereferencer
