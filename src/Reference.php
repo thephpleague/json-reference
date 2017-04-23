@@ -196,7 +196,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     {
         if (!static::$dereferencer) {
             throw new \RuntimeException(
-                sprintf('The reference %s cannot be resolved without a Dereferencer.', $this->ref)
+                sprintf('The reference %s cannot be resolved or serialized without a Dereferencer.', $this->ref)
             );
         }
 
