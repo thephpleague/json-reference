@@ -149,9 +149,9 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @param object   $schema
-     * @param string   $uri
-     * @param callable $resolver
+     * @param string|object $schema
+     * @param string        $uri
+     * @param callable      $resolver
      *
      * @return object
      */

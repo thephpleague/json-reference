@@ -184,7 +184,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     public static function setDereferencerInstance(DereferencerInterface $dereferencer = null)
     {
-        static::$dereferencer = $dereferencer;
+        self::$dereferencer = $dereferencer;
     }
 
     /**
@@ -194,12 +194,12 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
      */
     private function dereferencer()
     {
-        if (!static::$dereferencer) {
+        if (!self::$dereferencer) {
             throw new \RuntimeException(
                 sprintf('The reference %s cannot be resolved or serialized without a Dereferencer.', $this->ref)
             );
         }
 
-        return static::$dereferencer;
+        return self::$dereferencer;
     }
 }

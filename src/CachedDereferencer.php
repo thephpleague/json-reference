@@ -40,7 +40,7 @@ final class CachedDereferencer implements DereferencerInterface
      */
     public function dereference($schema, $uri = '')
     {
-        $key = static::key($schema, $uri);
+        $key = self::key($schema, $uri);
 
         return $this->remember($key, function () use ($schema, $uri) {
             return $this->dereferencer->dereference($schema, $uri);
