@@ -50,7 +50,7 @@ function pointer_push($pointer, ...$segments)
  */
 function strip_fragment($ref)
 {
-    $fragment = parse_url($ref, PHP_URL_FRAGMENT);
+    $fragment = Uri\parse($ref)['fragment'];
 
     return $fragment ? str_replace($fragment, '', $ref) : $ref;
 }
@@ -66,7 +66,7 @@ function strip_fragment($ref)
  */
 function resolve_fragment($ref, $schema)
 {
-    $fragment = parse_url($ref, PHP_URL_FRAGMENT);
+    $fragment = Uri\parse($ref)['fragment'];
 
     if (!is_internal_ref($ref) && is_string($fragment)) {
         return (new Pointer($schema))->get($fragment);
