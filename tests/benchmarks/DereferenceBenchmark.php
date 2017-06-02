@@ -31,24 +31,25 @@ abstract class DereferenceBenchmark extends Benchmark
         $this->arrayCache  = new SimpleCacheBridge(new ArrayCachePool());
 
         $this->redisCache = new SimpleCacheBridge(new PredisCachePool($predis = new Client()));
+
         $predis->connect();
     }
 
     public function benchStandard()
     {
         $schema = $this->schema;
-        (new Dereferencer())->dereference($schema);
+        Dereferencer::draft4()->dereference($schema);
     }
 
     public function benchArrayCache()
     {
         $schema = $this->schema;
-        (new CachedDereferencer(new Dereferencer(), $this->arrayCache))->dereference($schema);
+        (new CachedDereferencer(Dereferencer::draft4(), $this->arrayCache))->dereference($schema);
     }
 
     public function benchRedisCache()
     {
         $schema = $this->schema;
-        (new CachedDereferencer(new Dereferencer(), $this->redisCache))->dereference($schema);
+        (new CachedDereferencer(Dereferencer::draft4(), $this->redisCache))->dereference($schema);
     }
 }
