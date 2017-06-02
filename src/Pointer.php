@@ -3,6 +3,7 @@
 namespace League\JsonReference;
 
 use League\JsonReference\Pointer\InvalidPointerException;
+use League\JsonReference\Pointer\NonExistentValue;
 
 /**
  * A simple JSON Pointer implementation that can traverse
@@ -34,9 +35,13 @@ final class Pointer
      */
     public function get($pointer)
     {
-        $pointer = $this->parse($pointer);
+        $value = $this->traverse($pointer);
 
-        return $this->traverse($this->json, $pointer);
+        if ($value instanceof NonExistentValue) {
+            throw InvalidPointerException::nonexistentValue($value->getValue());
+        }
+
+        return $value;
     }
 
     /**
@@ -46,13 +51,7 @@ final class Pointer
      */
     public function has($pointer)
     {
-        try {
-            $this->get($pointer);
-
-            return true;
-        } catch (InvalidPointerException $e) {
-            return false;
-        }
+        return !$this->traverse($pointer) instanceof NonExistentValue;
     }
 
     /**
@@ -133,46 +132,43 @@ final class Pointer
     }
 
     /**
-     * @param mixed $json    The result of a json_decode call or a portion of it.
-     * @param array $pointer The parsed pointer
+     * Returns the value referenced by the pointer or a NonExistentValue if the value does not exist.
+     *
+     * @param string $pointer The pointer
      *
      * @return mixed
      */
-    private function traverse($json, $pointer)
+    private function traverse($pointer)
     {
-        // If we are out of pointers to process we are done.
-        if (empty($pointer)) {
-            return $json;
+        $pointer = $this->parse($pointer);
+        $json    = $this->json;
+
+        foreach ($pointer as $segment) {
+            if ($json instanceof Reference) {
+                if (!$json->has($segment)) {
+                    return new NonExistentValue($segment);
+                }
+                $json = $json->get($segment);
+            } elseif (is_object($json)) {
+                // who does this?
+                if ($segment === '' && property_exists($json, '_empty_')) {
+                    $segment = '_empty_';
+                }
+                if (!property_exists($json, $segment)) {
+                    return new NonExistentValue($segment);
+                }
+                $json = $json->$segment;
+            } elseif (is_array($json)) {
+                if (!array_key_exists($segment, $json)) {
+                    return new NonExistentValue($segment);
+                }
+                $json = $json[$segment];
+            } else {
+                return new NonExistentValue($segment);
+            }
         }
 
-        $reference = array_shift($pointer);
-
-        if (!is_array($json) && !is_object($json)) {
-            throw InvalidPointerException::nonexistentValue($reference);
-        }
-
-        if ($json instanceof  Reference) {
-            if (!$json->has($reference)) {
-                throw InvalidPointerException::nonexistentValue($reference);
-            }
-            $json = $json->get($reference);
-        } elseif (is_array($json)) {
-            if (!array_key_exists($reference, $json)) {
-                throw InvalidPointerException::nonexistentValue($reference);
-            }
-            $json = $json[$reference];
-        } else {
-            // who does this?
-            if ($reference === '' && property_exists($json, '_empty_')) {
-                $reference = '_empty_';
-            }
-            if (!property_exists($json, $reference)) {
-                throw InvalidPointerException::nonexistentValue($reference);
-            }
-            $json = $json->$reference;
-        }
-
-        return $this->traverse($json, $pointer);
+        return $json;
     }
 
     /**
@@ -191,21 +187,21 @@ final class Pointer
             throw InvalidPointerException::invalidType(gettype($pointer));
         }
 
+        if (!isset($pointer[0])) {
+            return [];
+        }
+
         // If the pointer is a url fragment, it needs to be url decoded.
-        if (strpos($pointer, '#') === 0) {
+        if ($pointer[0] === '#') {
             $pointer = urldecode(substr($pointer, 1));
         }
 
         // For convenience add the beginning slash if it's missing.
-        if ($pointer !== '' && strpos($pointer, '/') !== 0) {
+        if (isset($pointer[0]) && $pointer[0] !== '/') {
             $pointer = '/' . $pointer;
         }
 
-        return array_map(
-            function ($segment) {
-                return str_replace('~0', '~', str_replace('~1', '/', $segment));
-            },
-            array_slice(explode('/', $pointer), 1)
-        );
+        $pointer = array_slice(explode('/', $pointer), 1);
+        return str_replace(['~1', '~0'], ['/', '~'], $pointer);
     }
 }

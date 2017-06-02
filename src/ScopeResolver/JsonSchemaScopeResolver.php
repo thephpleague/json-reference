@@ -3,8 +3,6 @@
 namespace League\JsonReference\ScopeResolver;
 
 use League\JsonReference\ScopeResolverInterface;
-use function League\JsonReference\pointer;
-use function League\JsonReference\pointer_push;
 use function League\JsonReference\resolve_uri;
 
 final class JsonSchemaScopeResolver implements ScopeResolverInterface
@@ -30,18 +28,14 @@ final class JsonSchemaScopeResolver implements ScopeResolverInterface
      */
     public function resolve($schema, $currentPointer, $currentScope)
     {
-        $pointer     = pointer($schema);
-        $currentPath = '';
-
+        $current = $schema;
         foreach (explode('/', $currentPointer) as $segment) {
-            if (!empty($segment)) {
-                $currentPath = pointer_push($currentPath, $segment);
+            if (isset($current->$segment)) {
+                $current = $current->$segment;
             }
-            if ($pointer->has($currentPath . '/' . $this->keyword)) {
-                $id = $pointer->get($currentPath . '/' . $this->keyword);
-                if (is_string($id)) {
-                    $currentScope = resolve_uri($id, $currentScope);
-                }
+            $id = isset($current->{$this->keyword}) ? $current->{$this->keyword} : null;
+            if (is_string($id)) {
+                $currentScope = resolve_uri($id, $currentScope);
             }
         }
 
