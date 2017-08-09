@@ -51,7 +51,7 @@ function strip_fragment($ref)
 {
     $fragment = Uri\parse($ref)['fragment'];
 
-    return $fragment ? str_replace($fragment, '', $ref) : $ref;
+    return $fragment ? str_replace('#'.$fragment, '#', $ref) : $ref;
 }
 
 /**
