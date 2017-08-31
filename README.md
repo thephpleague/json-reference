@@ -27,7 +27,7 @@ composer require league/json-reference
 
 ## Usage
 
-Complete documentation is available [here](http://json-guard.thephpleague.com/).
+Complete documentation is available [here](http://json-reference.thephpleague.com/).
 
 ## Change log
 
@@ -68,7 +68,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-travis]: https://travis-ci.org/thephpleague/json-reference
 [link-scrutinizer]: https://scrutinizer-ci.com/g/thephpleague/json-reference/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/thephpleague/json-reference
-[link-docs]: http://json-guard.thephpleague.com/
+[link-docs]: http://json-reference.thephpleague.com/
 [link-author]: https://github.com/thephpleague
 [link-contributors]: ../../contributors
 
