@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\JsonDecoder;
+namespace League\JsonReference\Decoder;
 
-use League\JsonReference\JsonDecoderInterface;
-use League\JsonReference\JsonDecodingException;
+use League\JsonReference\DecoderInterface;
+use League\JsonReference\DecodingException;
 
-final class JsonDecoder implements JsonDecoderInterface
+final class JsonDecoder implements DecoderInterface
 {
     /**
      * @var bool
@@ -34,17 +34,16 @@ final class JsonDecoder implements JsonDecoderInterface
         $this->options = $options;
     }
 
+    
     /**
-     * @param string $json
-     *
-     * @return object
+     * {@inheritdoc}
      */
-    public function decode($json)
+    public function decode($schema)
     {
-        $data = json_decode($json, $this->assoc, $this->depth, $this->options);
+        $data = json_decode($schema, $this->assoc, $this->depth, $this->options);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonDecodingException(sprintf('Invalid JSON: %s', json_last_error_msg()));
+            throw new DecodingException(sprintf('Invalid JSON: %s', json_last_error_msg()));
         }
 
         return $data;

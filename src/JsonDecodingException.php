@@ -2,7 +2,5 @@
 
 namespace League\JsonReference;
 
-final class JsonDecodingException extends \RuntimeException
-{
-
-}
+// Legacy
+class_alias('DecodingException', 'JsonDecodingException');

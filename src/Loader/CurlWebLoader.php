@@ -3,8 +3,8 @@
 namespace League\JsonReference\Loader;
 
 use League\JsonReference;
-use League\JsonReference\JsonDecoder\JsonDecoder;
-use League\JsonReference\JsonDecoderInterface;
+use League\JsonReference\DecoderManager;
+use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
 
 final class CurlWebLoader implements LoaderInterface
@@ -20,28 +20,36 @@ final class CurlWebLoader implements LoaderInterface
     private $curlOptions;
 
     /**
-     * @var JsonDecoderInterface
+     * @var DecoderManager
      */
-    private $jsonDecoder;
+    private $decoders;
 
     /**
-     * @param string               $prefix
-     * @param array                $curlOptions
-     * @param JsonDecoderInterface $jsonDecoder
+     * @param string                              $prefix
+     * @param array                               $curlOptions
+     * @param JsonDecoderInterface|DecoderManager $decoders
      */
-    public function __construct($prefix, array $curlOptions = null, JsonDecoderInterface $jsonDecoder = null)
+    public function __construct($prefix, array $curlOptions = null, $decoders = null)
     {
-        $this->prefix      = $prefix;
-        $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
+        $this->prefix = $prefix;
         $this->setCurlOptions($curlOptions);
+        
+        if ($decoders instanceof DecoderInterface) {
+            $this->decoders = new DecoderManager([$decoders]);
+        } else {
+            $this->decoders = $decoders ?: new DecoderManager();
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function load($path)
+    public function load($path, $defaultExtension = 'json')
     {
         $uri = $this->prefix . $path;
+        
+        $extension = isset(pathinfo($path)['extension']) ? pathinfo($path)['extension'] : $defaultExtension;
+        
         $ch = curl_init($uri);
         curl_setopt_array($ch, $this->curlOptions);
         list($response, $statusCode) = $this->getResponseBodyAndStatusCode($ch);
@@ -51,7 +59,7 @@ final class CurlWebLoader implements LoaderInterface
             throw JsonReference\SchemaLoadingException::create($uri);
         }
 
-        return $this->jsonDecoder->decode($response);
+        return $this->decoders->getDecoder($extension)->decode($response);
     }
 
     /**

@@ -65,10 +65,14 @@ final class Dereferencer implements DereferencerInterface
      */
     public function dereference($schema, $uri = '')
     {
-        return $this->crawl($schema, $uri, function ($schema, $pointer, $ref, $scope) {
-            $resolved = new Reference($ref, $scope, is_internal_ref($ref) ? $schema : null);
-            return merge_ref($schema, $resolved, $pointer);
-        });
+        return $this->crawl(
+            $schema,
+            $uri,
+            function ($schema, $pointer, $ref, $scope) {
+                $resolved = new Reference($ref, $scope, is_internal_ref($ref) ? $schema : null);
+                return merge_ref($schema, $resolved, $pointer);
+            }
+        );
     }
 
     /**
