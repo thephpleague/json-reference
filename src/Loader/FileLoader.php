@@ -2,35 +2,42 @@
 
 namespace League\JsonReference\Loader;
 
-use League\JsonReference\JsonDecoder\JsonDecoder;
-use League\JsonReference\JsonDecoderInterface;
+use League\JsonReference\DecoderManager;
+use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
 
 final class FileLoader implements LoaderInterface
 {
     /**
-     * @var JsonDecoderInterface
+     * @var DecoderManager
      */
-    private $jsonDecoder;
+    private $decoders;
 
     /**
-     * @param JsonDecoderInterface $jsonDecoder
+     * @param JsonDecoderInterface|DecoderManager $decoders
      */
-    public function __construct(JsonDecoderInterface $jsonDecoder = null)
+    public function __construct($decoders = null)
     {
-        $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
+        if ($decoders instanceof DecoderInterface) {
+            $this->decoders = new DecoderManager([$decoders]);
+        } else {
+            $this->decoders = $decoders ?: new DecoderManager();
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function load($path)
+    public function load($path, $defaultExtension = 'json')
     {
+        $path      = 'file://'.$path;
+        $extension = isset(pathinfo($path)['extension']) ? pathinfo($path)['extension'] : $defaultExtension;
+
         if (!file_exists($path)) {
             throw SchemaLoadingException::notFound($path);
         }
 
-        return $this->jsonDecoder->decode(file_get_contents($path));
+        return $this->decoders->getDecoder($extension)->decode(file_get_contents($path));
     }
 }

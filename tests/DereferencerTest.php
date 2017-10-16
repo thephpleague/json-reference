@@ -6,6 +6,7 @@ use League\JsonReference\Dereferencer;
 use League\JsonReference\Loader\ArrayLoader;
 use League\JsonReference\Pointer;
 use League\JsonReference\Reference;
+use League\JsonReference\LoaderManager;
 
 class DereferencerTest extends \PHPUnit_Framework_TestCase
 {
@@ -48,6 +49,14 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
     {
         $deref  = new Dereferencer();
         $result = $deref->dereference('http://localhost:1234/albums.json');
+
+        $this->assertSame('string', $result->items->properties->title->type);
+    }
+    
+    function test_it_resolves_mixed_references()
+    {
+        $deref  = new Dereferencer();
+        $result = $deref->dereference('http://localhost:1234/albums.yaml');
 
         $this->assertSame('string', $result->items->properties->title->type);
     }
@@ -190,5 +199,11 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
         $result = $deref->dereference($path);
 
         $this->assertEquals($result, unserialize(serialize($result)));
+    }
+    
+    function test_it_returns_loader_manager()
+    {
+        $deref  = new Dereferencer();
+        $this->assertInstanceOf(LoaderManager::class, $deref->getLoaderManager());       
     }
 }

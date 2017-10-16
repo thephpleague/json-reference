@@ -2,6 +2,7 @@
 
 namespace League\JsonReference;
 
+use League\JsonReference\DecoderManager;
 use League\JsonReference\Loader\CurlWebLoader;
 use League\JsonReference\Loader\FileGetContentsWebLoader;
 use League\JsonReference\Loader\FileLoader;
@@ -12,16 +13,24 @@ final class LoaderManager
      * @var LoaderInterface[]
      */
     private $loaders = [];
+    
+    /**
+     * @var DecoderManager
+     */
+    private $decoderManager = [];
 
     /**
      * @param LoaderInterface[] $loaders
      */
-    public function __construct(array $loaders = [])
+    public function __construct(array $loaders = [], DecoderManager $decoderManager = null)
     {
         if (empty($loaders)) {
             $this->registerDefaultFileLoader();
             $this->registerDefaultWebLoaders();
-            return;
+        }
+        
+        if (empty($decoderManager)) {
+            $this->decoderManager = new DecoderManager();
         }
 
         foreach ($loaders as $prefix => $loader) {
@@ -84,7 +93,7 @@ final class LoaderManager
     {
         $this->loaders['file'] = new FileLoader();
     }
-
+    
     /**
      * Register the default web loaders.  If the curl extension is loaded,
      * the CurlWebLoader will be used.  Otherwise the FileGetContentsWebLoader
@@ -100,5 +109,25 @@ final class LoaderManager
             $this->loaders['https'] = new FileGetContentsWebLoader('https://');
             $this->loaders['http']  = new FileGetContentsWebLoader('http://');
         }
+    }
+
+    /**
+     * @return DecoderManager
+     */
+    public function getDecoderManager()
+    {
+        return $this->decoderManager;
+    }
+
+    /**
+     * @param \League\JsonReference\DecoderManager $decoderManager
+     *
+     * @return \League\JsonReference\LoaderManager
+     */
+    public function setDecoderManager(DecoderManager $decoderManager)
+    {
+        $this->decoderManager = $decoderManager;
+
+        return $this;
     }
 }

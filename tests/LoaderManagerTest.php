@@ -5,6 +5,7 @@ namespace League\JsonReference\Test;
 use League\JsonReference\Loader\ArrayLoader;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\LoaderManager;
+use League\JsonReference\DecoderManager;
 
 class LoaderManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,5 +48,11 @@ class LoaderManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($manager->hasLoader('http'));
         $this->assertFalse($manager->hasLoader('https'));
         $this->assertTrue($manager->hasLoader('array'));
+    }
+    
+    function test_it_returns_decoder_manager()
+    {
+        $loaderManager  = new LoaderManager();
+        $this->assertInstanceOf(DecoderManager::class, $loaderManager->getDecoderManager());       
     }
 }
