@@ -1,5 +1,5 @@
 {
-    "name": "ActiveRules/json-reference",
+    "name": "activerules/json-reference",
     "type": "library",
     "description": "A library for working with JSON References",
     "keywords": [
