@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveRules\JsonReference;
+namespace Activerules\JsonReference;
 
 /**
  * An interface for the dereferencer to allow decorating.
@@ -25,12 +25,12 @@ interface DereferencerInterface
     public function getLoaderManager();
 
     /**
-     * @return \ActiveRules\JsonReference\ScopeResolverInterface
+     * @return \Activerules\JsonReference\ScopeResolverInterface
      */
     public function getScopeResolver();
 
     /**
-     * @return \ActiveRules\JsonReference\ReferenceSerializerInterface
+     * @return \Activerules\JsonReference\ReferenceSerializerInterface
      */
     public function getReferenceSerializer();
 }

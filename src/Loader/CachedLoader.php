@@ -1,8 +1,8 @@
 <?php
 
-namespace ActiveRules\JsonReference\Loader;
+namespace Activerules\JsonReference\Loader;
 
-use ActiveRules\JsonReference\LoaderInterface;
+use Activerules\JsonReference\LoaderInterface;
 use Psr\SimpleCache\CacheInterface;
 
 final class CachedLoader implements LoaderInterface

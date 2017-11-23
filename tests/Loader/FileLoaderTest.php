@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use ActiveRules\JsonReference\Loader\FileLoader;
-use ActiveRules\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\Loader\FileLoader;
+use Activerules\JsonReference\SchemaLoadingException;
 
 class FileLoaderTest extends \PHPUnit_Framework_TestCase
 {

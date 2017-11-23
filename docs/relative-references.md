@@ -34,5 +34,5 @@ The dereferencer will attempt to load `./album.json` from `http://app.dev/api/al
 To enable JSON Schema id resolution you can use the named constructor that corresponds to the version of JSON Schema you are using.  Draft 4 uses `id`, Draft 6 uses `$id`.
 
 ```php
-$dereferencer = ActiveRules\JsonReference\Dereferencer::draft4();
+$dereferencer = Activerules\JsonReference\Dereferencer::draft4();
 ```

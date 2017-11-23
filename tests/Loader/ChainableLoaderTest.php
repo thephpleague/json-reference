@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use ActiveRules\JsonReference\Loader\ArrayLoader;
-use ActiveRules\JsonReference\Loader\ChainedLoader;
+use Activerules\JsonReference\Loader\ArrayLoader;
+use Activerules\JsonReference\Loader\ChainedLoader;
 
 class ChainableLoaderTest extends \PHPUnit_Framework_TestCase
 {

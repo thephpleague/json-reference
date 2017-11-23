@@ -1,10 +1,10 @@
 <?php
 
-namespace ActiveRules\JsonReference;
+namespace Activerules\JsonReference;
 
-use ActiveRules\JsonReference\Loader\CurlWebLoader;
-use ActiveRules\JsonReference\Loader\FileGetContentsWebLoader;
-use ActiveRules\JsonReference\Loader\FileLoader;
+use Activerules\JsonReference\Loader\CurlWebLoader;
+use Activerules\JsonReference\Loader\FileGetContentsWebLoader;
+use Activerules\JsonReference\Loader\FileLoader;
 
 final class LoaderManager
 {

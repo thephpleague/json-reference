@@ -1,10 +1,10 @@
 <?php
 
-namespace ActiveRules\JsonReference\ReferenceSerializer;
+namespace Activerules\JsonReference\ReferenceSerializer;
 
-use ActiveRules\JsonReference\Reference;
-use ActiveRules\JsonReference\ReferenceSerializationException;
-use ActiveRules\JsonReference\ReferenceSerializerInterface;
+use Activerules\JsonReference\Reference;
+use Activerules\JsonReference\ReferenceSerializationException;
+use Activerules\JsonReference\ReferenceSerializerInterface;
 
 /**
  * A reference serializer that attempts to inline the referenced schema.

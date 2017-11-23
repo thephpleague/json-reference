@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveRules\JsonReference;
+namespace Activerules\JsonReference;
 
 /**
  * A Reference object represents an internal $ref in a JSON object.
@@ -11,7 +11,7 @@ namespace ActiveRules\JsonReference;
 final class Reference implements \JsonSerializable, \IteratorAggregate
 {
     /**
-     * @var \ActiveRules\JsonReference\DereferencerInterface|null
+     * @var \Activerules\JsonReference\DereferencerInterface|null
      */
     private static $dereferencer;
 
@@ -180,7 +180,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     }
 
     /**
-     * @param \ActiveRules\JsonReference\DereferencerInterface|null $dereferencer
+     * @param \Activerules\JsonReference\DereferencerInterface|null $dereferencer
      */
     public static function setDereferencerInstance(DereferencerInterface $dereferencer = null)
     {
@@ -188,7 +188,7 @@ final class Reference implements \JsonSerializable, \IteratorAggregate
     }
 
     /**
-     * @return \ActiveRules\JsonReference\DereferencerInterface
+     * @return \Activerules\JsonReference\DereferencerInterface
      *
      * @throws \RuntimeException
      */

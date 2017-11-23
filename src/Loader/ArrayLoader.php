@@ -1,11 +1,11 @@
 <?php
 
-namespace ActiveRules\JsonReference\Loader;
+namespace Activerules\JsonReference\Loader;
 
-use ActiveRules\JsonReference\JsonDecoder\JsonDecoder;
-use ActiveRules\JsonReference\JsonDecoderInterface;
-use ActiveRules\JsonReference\LoaderInterface;
-use ActiveRules\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\JsonDecoder\JsonDecoder;
+use Activerules\JsonReference\JsonDecoderInterface;
+use Activerules\JsonReference\LoaderInterface;
+use Activerules\JsonReference\SchemaLoadingException;
 
 final class ArrayLoader implements LoaderInterface
 {

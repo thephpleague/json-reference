@@ -1,10 +1,10 @@
 <?php
 
-namespace ActiveRules\JsonReference;
+namespace Activerules\JsonReference;
 
-use ActiveRules\JsonReference\ReferenceSerializer\SafeReferenceSerializer;
-use ActiveRules\JsonReference\ScopeResolver\JsonSchemaScopeResolver;
-use ActiveRules\JsonReference\ScopeResolver\NullScopeResolver;
+use Activerules\JsonReference\ReferenceSerializer\SafeReferenceSerializer;
+use Activerules\JsonReference\ScopeResolver\JsonSchemaScopeResolver;
+use Activerules\JsonReference\ScopeResolver\NullScopeResolver;
 
 final class Dereferencer implements DereferencerInterface
 {
@@ -27,7 +27,7 @@ final class Dereferencer implements DereferencerInterface
      * Create a new Dereferencer.
      *
      * @param ScopeResolverInterface                             $scopeResolver
-     * @param \ActiveRules\JsonReference\ReferenceSerializerInterface $referenceSerializer
+     * @param \Activerules\JsonReference\ReferenceSerializerInterface $referenceSerializer
      */
     public function __construct(
         ScopeResolverInterface $scopeResolver = null,
@@ -43,7 +43,7 @@ final class Dereferencer implements DereferencerInterface
     /**
      * Create a new dereferencer configured for dereferencing JSON Schema Draft4 schemas.
      *
-     * @return \ActiveRules\JsonReference\Dereferencer
+     * @return \Activerules\JsonReference\Dereferencer
      */
     public static function draft4()
     {
@@ -53,7 +53,7 @@ final class Dereferencer implements DereferencerInterface
     /**
      * Create a new dereferencer configured for dereferencing JSON Schema Draft6 schemas.
      *
-     * @return \ActiveRules\JsonReference\Dereferencer
+     * @return \Activerules\JsonReference\Dereferencer
      */
     public static function draft6()
     {
@@ -97,9 +97,9 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @param \ActiveRules\JsonReference\LoaderManager $loaderManager
+     * @param \Activerules\JsonReference\LoaderManager $loaderManager
      *
-     * @return \ActiveRules\JsonReference\Dereferencer
+     * @return \Activerules\JsonReference\Dereferencer
      */
     public function setLoaderManager(LoaderManager $loaderManager)
     {
@@ -109,7 +109,7 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @return \ActiveRules\JsonReference\ScopeResolverInterface
+     * @return \Activerules\JsonReference\ScopeResolverInterface
      */
     public function getScopeResolver()
     {
@@ -117,9 +117,9 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @param \ActiveRules\JsonReference\ScopeResolverInterface $scopeResolver
+     * @param \Activerules\JsonReference\ScopeResolverInterface $scopeResolver
      *
-     * @return \ActiveRules\JsonReference\Dereferencer
+     * @return \Activerules\JsonReference\Dereferencer
      */
     public function setScopeResolver(ScopeResolverInterface $scopeResolver)
     {
@@ -129,7 +129,7 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @return \ActiveRules\JsonReference\ReferenceSerializerInterface
+     * @return \Activerules\JsonReference\ReferenceSerializerInterface
      */
     public function getReferenceSerializer()
     {
@@ -137,9 +137,9 @@ final class Dereferencer implements DereferencerInterface
     }
 
     /**
-     * @param \ActiveRules\JsonReference\ReferenceSerializerInterface $referenceSerializer
+     * @param \Activerules\JsonReference\ReferenceSerializerInterface $referenceSerializer
      *
-     * @return \ActiveRules\JsonReference\Dereferencer
+     * @return \Activerules\JsonReference\Dereferencer
      */
     public function setReferenceSerializer(ReferenceSerializerInterface $referenceSerializer)
     {
@@ -159,7 +159,7 @@ final class Dereferencer implements DereferencerInterface
     {
         list($schema, $uri) = $this->prepareArguments($schema, $uri);
 
-        foreach (schema_extract($schema, 'ActiveRules\JsonReference\is_ref') as $pointer => $ref) {
+        foreach (schema_extract($schema, 'Activerules\JsonReference\is_ref') as $pointer => $ref) {
             $scope = $this->scopeResolver->resolve($schema, $pointer, $uri);
 
             $schema = $resolver($schema, $pointer, $ref, $scope);

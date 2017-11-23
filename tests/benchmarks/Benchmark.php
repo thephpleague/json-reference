@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveRules\JsonReference\Bench;
+namespace Activerules\JsonReference\Bench;
 
 /**
  * @BeforeMethods({"setUp"})
