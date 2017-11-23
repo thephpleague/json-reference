@@ -1,6 +1,6 @@
 <?php
 
-namespace ActiveRules\JsonReference;
+namespace Activerules\JsonReference;
 
 final class ReferenceSerializationException extends \RuntimeException
 {

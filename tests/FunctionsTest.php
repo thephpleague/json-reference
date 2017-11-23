@@ -1,8 +1,8 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
-use function ActiveRules\JsonReference\pointer_push;
+use function Activerules\JsonReference\pointer_push;
 
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
      */
     function test_resolves_uris($id, $parentScope, $expectedResult)
     {
-        $result = \ActiveRules\JsonReference\resolve_uri($id, $parentScope);
+        $result = \Activerules\JsonReference\resolve_uri($id, $parentScope);
         $this->assertSame($expectedResult, $result);
     }
 
@@ -37,7 +37,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     {
         $schema = json_decode('{ "properties": { "money": { "enum": [ { "currency": "USD" } ] } } }');
 
-        $matches = \ActiveRules\JsonReference\schema_extract($schema, function ($keyword, $value) {
+        $matches = \Activerules\JsonReference\schema_extract($schema, function ($keyword, $value) {
             return $keyword === 'currency' && $value === 'USD';
         });
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use ActiveRules\JsonReference\Loader\CurlWebLoader;
-use ActiveRules\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\Loader\CurlWebLoader;
+use Activerules\JsonReference\SchemaLoadingException;
 
 class CurlWebLoaderTest extends \PHPUnit_Framework_TestCase
 {

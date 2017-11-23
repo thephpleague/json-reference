@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\ReferenceSerializer;
+namespace Activerules\JsonReference\ReferenceSerializer;
 
-use ActiveRules\JsonReference\Reference;
-use ActiveRules\JsonReference\ReferenceSerializerInterface;
+use Activerules\JsonReference\Reference;
+use Activerules\JsonReference\ReferenceSerializerInterface;
 
 /**
  * A reference serializer that returns the original reference.

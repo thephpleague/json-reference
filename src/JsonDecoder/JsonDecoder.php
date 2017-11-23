@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\JsonDecoder;
+namespace Activerules\JsonReference\JsonDecoder;
 
-use ActiveRules\JsonReference\JsonDecoderInterface;
-use ActiveRules\JsonReference\JsonDecodingException;
+use Activerules\JsonReference\JsonDecoderInterface;
+use Activerules\JsonReference\JsonDecodingException;
 
 final class JsonDecoder implements JsonDecoderInterface
 {

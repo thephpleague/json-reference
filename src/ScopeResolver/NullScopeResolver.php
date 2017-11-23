@@ -1,8 +1,8 @@
 <?php
 
-namespace ActiveRules\JsonReference\ScopeResolver;
+namespace Activerules\JsonReference\ScopeResolver;
 
-use ActiveRules\JsonReference\ScopeResolverInterface;
+use Activerules\JsonReference\ScopeResolverInterface;
 
 final class NullScopeResolver implements ScopeResolverInterface
 {

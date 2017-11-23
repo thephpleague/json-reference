@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\Loader;
+namespace Activerules\JsonReference\Loader;
 
-use ActiveRules\JsonReference\LoaderInterface;
-use ActiveRules\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\LoaderInterface;
+use Activerules\JsonReference\SchemaLoadingException;
 
 /**
  * This loader takes two other loaders as constructor parameters, and will
@@ -23,8 +23,8 @@ final class ChainedLoader implements LoaderInterface
     private $secondLoader;
 
     /**
-     * @param \ActiveRules\JsonReference\LoaderInterface $firstLoader
-     * @param \ActiveRules\JsonReference\LoaderInterface $secondLoader
+     * @param \Activerules\JsonReference\LoaderInterface $firstLoader
+     * @param \Activerules\JsonReference\LoaderInterface $secondLoader
      */
     public function __construct(LoaderInterface $firstLoader, LoaderInterface $secondLoader)
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
-use ActiveRules\JsonReference\CachedDereferencer;
-use ActiveRules\JsonReference\Dereferencer;
+use Activerules\JsonReference\CachedDereferencer;
+use Activerules\JsonReference\Dereferencer;
 
 class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace ActiveRules\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
-use ActiveRules\JsonReference\Dereferencer;
-use ActiveRules\JsonReference\Reference;
+use Activerules\JsonReference\Dereferencer;
+use Activerules\JsonReference\Reference;
 
 class ReferenceTest extends \PHPUnit_Framework_TestCase
 {
