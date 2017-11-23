@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference;
+namespace ActiveRules\JsonReference;
 
 final class ReferenceSerializationException extends \RuntimeException
 {

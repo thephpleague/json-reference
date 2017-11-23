@@ -1,8 +1,8 @@
 <?php
 
-namespace League\JsonReference\Loader;
+namespace ActiveRules\JsonReference\Loader;
 
-use League\JsonReference\LoaderInterface;
+use ActiveRules\JsonReference\LoaderInterface;
 use Psr\SimpleCache\CacheInterface;
 
 final class CachedLoader implements LoaderInterface

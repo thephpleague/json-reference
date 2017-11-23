@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\Bench;
+namespace ActiveRules\JsonReference\Bench;
 
 class MetaSchemaDereferenceBench extends DereferenceBenchmark
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace League\JsonReference\Test;
+namespace ActiveRules\JsonReference\Test;
 
-use League\JsonReference\Loader\ArrayLoader;
-use League\JsonReference\LoaderInterface;
-use League\JsonReference\LoaderManager;
+use ActiveRules\JsonReference\Loader\ArrayLoader;
+use ActiveRules\JsonReference\LoaderInterface;
+use ActiveRules\JsonReference\LoaderManager;
 
 class LoaderManagerTest extends \PHPUnit_Framework_TestCase
 {

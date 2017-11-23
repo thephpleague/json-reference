@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\Loader;
+namespace ActiveRules\JsonReference\Loader;
 
-use League\JsonReference;
-use League\JsonReference\JsonDecoder\JsonDecoder;
-use League\JsonReference\JsonDecoderInterface;
-use League\JsonReference\LoaderInterface;
+use ActiveRules\JsonReference;
+use ActiveRules\JsonReference\JsonDecoder\JsonDecoder;
+use ActiveRules\JsonReference\JsonDecoderInterface;
+use ActiveRules\JsonReference\LoaderInterface;
 
 final class CurlWebLoader implements LoaderInterface
 {

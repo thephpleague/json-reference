@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\Pointer;
+namespace ActiveRules\JsonReference\Pointer;
 
 /**
  * Represents a value referenced by a pointer that does not exist in the JSON data.
