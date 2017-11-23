@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use League\JsonReference\Loader\FileLoader;
-use League\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\Loader\FileLoader;
+use Activerules\JsonReference\SchemaLoadingException;
 
 class FileLoaderTest extends \PHPUnit_Framework_TestCase
 {

@@ -49,9 +49,9 @@ This is useful if you would like to register multiple loaders from the same pref
 ```php
 <?php
 
-use \League\JsonReference\Loader\ArrayLoader;
-use \League\JsonReference\Loader\ChainedLoader;
-use \League\JsonReference\Loader\CurlWebLoader;
+use \Activerules\JsonReference\Loader\ArrayLoader;
+use \Activerules\JsonReference\Loader\ChainedLoader;
+use \Activerules\JsonReference\Loader\CurlWebLoader;
 
 $loader = new ChainedLoader(
     new ArrayLoader(['json-schema.org/draft-04/schema' => json_decode(__DIR__ . '/schema.json')]),
@@ -102,7 +102,7 @@ Loaders are registered with the dereferencer's LoaderManager.  You register a lo
 use My\App\CustomLoader;
 
 $customLoader = new CustomLoader();
-$deref  = new League\JsonReference\Dereferencer();
+$deref  = new Activerules\JsonReference\Dereferencer();
 
 $deref->getLoaderManager()->registerLoader('http', $customLoader);
 $deref->getLoaderManager()->registerLoader('https', $customLoader);

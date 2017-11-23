@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
-use League\JsonReference\CachedDereferencer;
-use League\JsonReference\Dereferencer;
+use Activerules\JsonReference\CachedDereferencer;
+use Activerules\JsonReference\Dereferencer;
 
 class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference;
+namespace Activerules\JsonReference;
 
 use Sabre\Uri;
 

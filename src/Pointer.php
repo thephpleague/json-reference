@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference;
+namespace Activerules\JsonReference;
 
-use League\JsonReference\Pointer\InvalidPointerException;
-use League\JsonReference\Pointer\NonExistentValue;
+use Activerules\JsonReference\Pointer\InvalidPointerException;
+use Activerules\JsonReference\Pointer\NonExistentValue;
 
 /**
  * A simple JSON Pointer implementation that can traverse

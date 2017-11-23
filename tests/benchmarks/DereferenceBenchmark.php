@@ -1,12 +1,12 @@
 <?php
 
-namespace League\JsonReference\Bench;
+namespace Activerules\JsonReference\Bench;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Adapter\Predis\PredisCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
-use League\JsonReference\CachedDereferencer;
-use League\JsonReference\Dereferencer;
+use Activerules\JsonReference\CachedDereferencer;
+use Activerules\JsonReference\Dereferencer;
 use Predis\Client;
 
 /**

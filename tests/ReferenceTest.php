@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
-use League\JsonReference\Dereferencer;
-use League\JsonReference\Reference;
+use Activerules\JsonReference\Dereferencer;
+use Activerules\JsonReference\Reference;
 
 class ReferenceTest extends \PHPUnit_Framework_TestCase
 {

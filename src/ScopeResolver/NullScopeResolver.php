@@ -1,8 +1,8 @@
 <?php
 
-namespace League\JsonReference\ScopeResolver;
+namespace Activerules\JsonReference\ScopeResolver;
 
-use League\JsonReference\ScopeResolverInterface;
+use Activerules\JsonReference\ScopeResolverInterface;
 
 final class NullScopeResolver implements ScopeResolverInterface
 {

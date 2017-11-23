@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\Pointer;
+namespace Activerules\JsonReference\Pointer;
 
 final class InvalidPointerException extends \InvalidArgumentException
 {

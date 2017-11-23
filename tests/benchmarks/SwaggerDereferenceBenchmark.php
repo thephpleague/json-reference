@@ -1,6 +1,6 @@
 <?php
 
-namespace League\JsonReference\Bench;
+namespace Activerules\JsonReference\Bench;
 
 class SwaggerDereferenceBenchmark extends DereferenceBenchmark
 {

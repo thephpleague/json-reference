@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\ReferenceSerializer;
+namespace Activerules\JsonReference\ReferenceSerializer;
 
-use League\JsonReference\Reference;
-use League\JsonReference\ReferenceSerializerInterface;
+use Activerules\JsonReference\Reference;
+use Activerules\JsonReference\ReferenceSerializerInterface;
 
 /**
  * A reference serializer that returns the original reference.

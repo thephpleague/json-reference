@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use League\JsonReference\Loader\CurlWebLoader;
-use League\JsonReference\SchemaLoadingException;
+use Activerules\JsonReference\Loader\CurlWebLoader;
+use Activerules\JsonReference\SchemaLoadingException;
 
 class CurlWebLoaderTest extends \PHPUnit_Framework_TestCase
 {

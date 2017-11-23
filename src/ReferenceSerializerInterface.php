@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference;
+namespace Activerules\JsonReference;
 
 interface ReferenceSerializerInterface
 {
     /**
-     * @param \League\JsonReference\Reference $reference
+     * @param \Activerules\JsonReference\Reference $reference
      *
      * @return mixed data which can be serialized by json_encode,
      *                    which is a value of any type other than a resource.

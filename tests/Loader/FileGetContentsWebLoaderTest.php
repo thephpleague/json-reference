@@ -1,8 +1,8 @@
 <?php
 
-namespace League\JsonReference\Test\Loader;
+namespace Activerules\JsonReference\Test\Loader;
 
-use League\JsonReference\Loader\FileGetContentsWebLoader;
+use Activerules\JsonReference\Loader\FileGetContentsWebLoader;
 
 class FileGetContentsWebLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class FileGetContentsWebLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \League\JsonReference\SchemaLoadingException
+     * @expectedException \Activerules\JsonReference\SchemaLoadingException
      */
     function test_it_throws_when_the_schema_is_not_found()
     {
@@ -23,7 +23,7 @@ class FileGetContentsWebLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \League\JsonReference\SchemaLoadingException
+     * @expectedException \Activerules\JsonReference\SchemaLoadingException
      */
     function test_it_throws_when_the_response_is_empty()
     {

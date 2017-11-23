@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\JsonDecoder;
+namespace Activerules\JsonReference\JsonDecoder;
 
-use League\JsonReference\JsonDecoderInterface;
-use League\JsonReference\JsonDecodingException;
+use Activerules\JsonReference\JsonDecoderInterface;
+use Activerules\JsonReference\JsonDecodingException;
 
 final class JsonDecoder implements JsonDecoderInterface
 {

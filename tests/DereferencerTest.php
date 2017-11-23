@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\Test;
+namespace Activerules\JsonReference\Test;
 
-use League\JsonReference\Dereferencer;
-use League\JsonReference\Loader\ArrayLoader;
-use League\JsonReference\Pointer;
-use League\JsonReference\Reference;
+use Activerules\JsonReference\Dereferencer;
+use Activerules\JsonReference\Loader\ArrayLoader;
+use Activerules\JsonReference\Pointer;
+use Activerules\JsonReference\Reference;
 
 class DereferencerTest extends \PHPUnit_Framework_TestCase
 {

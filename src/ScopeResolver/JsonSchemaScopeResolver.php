@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\ScopeResolver;
+namespace Activerules\JsonReference\ScopeResolver;
 
-use League\JsonReference\ScopeResolverInterface;
-use function League\JsonReference\resolve_uri;
+use Activerules\JsonReference\ScopeResolverInterface;
+use function Activerules\JsonReference\resolve_uri;
 
 final class JsonSchemaScopeResolver implements ScopeResolverInterface
 {
