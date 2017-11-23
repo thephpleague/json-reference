@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference;
+namespace ActiveRules\JsonReference;
 
 use Closure;
-use League\JsonReference\Loader\CachedLoader;
+use ActiveRules\JsonReference\Loader\CachedLoader;
 use Psr\SimpleCache\CacheInterface;
 
 final class CachedDereferencer implements DereferencerInterface

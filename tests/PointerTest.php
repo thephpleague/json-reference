@@ -1,8 +1,8 @@
 <?php
 
-namespace League\JsonReference\Test;
+namespace ActiveRules\JsonReference\Test;
 
-use League\JsonReference\Pointer;
+use ActiveRules\JsonReference\Pointer;
 
 class PointerTest extends \PHPUnit_Framework_TestCase
 {

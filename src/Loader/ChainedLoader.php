@@ -1,9 +1,9 @@
 <?php
 
-namespace League\JsonReference\Loader;
+namespace ActiveRules\JsonReference\Loader;
 
-use League\JsonReference\LoaderInterface;
-use League\JsonReference\SchemaLoadingException;
+use ActiveRules\JsonReference\LoaderInterface;
+use ActiveRules\JsonReference\SchemaLoadingException;
 
 /**
  * This loader takes two other loaders as constructor parameters, and will
@@ -23,8 +23,8 @@ final class ChainedLoader implements LoaderInterface
     private $secondLoader;
 
     /**
-     * @param \League\JsonReference\LoaderInterface $firstLoader
-     * @param \League\JsonReference\LoaderInterface $secondLoader
+     * @param \ActiveRules\JsonReference\LoaderInterface $firstLoader
+     * @param \ActiveRules\JsonReference\LoaderInterface $secondLoader
      */
     public function __construct(LoaderInterface $firstLoader, LoaderInterface $secondLoader)
     {

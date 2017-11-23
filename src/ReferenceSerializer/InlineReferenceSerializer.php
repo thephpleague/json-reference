@@ -1,10 +1,10 @@
 <?php
 
-namespace League\JsonReference\ReferenceSerializer;
+namespace ActiveRules\JsonReference\ReferenceSerializer;
 
-use League\JsonReference\Reference;
-use League\JsonReference\ReferenceSerializationException;
-use League\JsonReference\ReferenceSerializerInterface;
+use ActiveRules\JsonReference\Reference;
+use ActiveRules\JsonReference\ReferenceSerializationException;
+use ActiveRules\JsonReference\ReferenceSerializerInterface;
 
 /**
  * A reference serializer that attempts to inline the referenced schema.

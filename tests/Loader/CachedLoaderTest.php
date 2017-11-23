@@ -1,11 +1,11 @@
 <?php
 
-namespace League\JsonReference\Test\Loader;
+namespace ActiveRules\JsonReference\Test\Loader;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
-use League\JsonReference\Loader\ArrayLoader;
-use League\JsonReference\Loader\CachedLoader;
+use ActiveRules\JsonReference\Loader\ArrayLoader;
+use ActiveRules\JsonReference\Loader\CachedLoader;
 
 class CachedLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class CachedLoaderTest extends \PHPUnit_Framework_TestCase
         $cache  = new SimpleCacheBridge($cache);
         $path   = 'file://schema';
         $schema = json_decode('{"hello": "world"}');
-        $loader = new CachedLoader($cache, new \League\JsonReference\Loader\ArrayLoader([$path => $schema]));
+        $loader = new CachedLoader($cache, new \ActiveRules\JsonReference\Loader\ArrayLoader([$path => $schema]));
         $loader->load($path);
         $this->assertSame($schema, $cache->get(sha1($path)));
     }

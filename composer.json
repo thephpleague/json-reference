@@ -1,19 +1,30 @@
 {
-    "name": "league/json-reference",
+    "name": "ActiveRules/json-reference",
     "type": "library",
     "description": "A library for working with JSON References",
     "keywords": [
         "json-reference",
         "json",
-        "reference"
+        "reference",
+        "relative",
+        "psuedo-relative",
+        "local",
+        "path",
+        "ref"
     ],
     "license": "MIT",
     "authors": [
         {
+            "name": "Brian Winkers",
+            "email": "bwinkers@gmail.com",
+            "homepage": "https://github.com/bwinkers",
+            "role": "Fork Developer"
+        },
+        {
             "name": "Matthew Allan",
             "email": "matthew.james.allan@gmail.com",
             "homepage": "https://mattallan.org",
-            "role": "Developer"
+            "role": "Original Developer"
         }
     ],
     "require": {
@@ -33,7 +44,7 @@
     },
     "autoload": {
         "psr-4": {
-            "League\\JsonReference\\": "src"
+            "ActiveRules\\JsonReference\\": "src"
         },
         "files": [
             "src/functions.php"
@@ -41,8 +52,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "League\\JsonReference\\Test\\": "tests",
-            "League\\JsonReference\\Bench\\": "tests/benchmarks"
+            "ActiveRules\\JsonReference\\Test\\": "tests",
+            "ActiveRules\\JsonReference\\Bench\\": "tests/benchmarks"
         }
     },
     "scripts": {
