@@ -6,6 +6,7 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
 use League\JsonReference\CachedDereferencer;
 use League\JsonReference\Dereferencer;
+use function peterpostmann\uri\fileuri;
 
 class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
         $cache  = new ArrayCachePool();
         $cache  = new SimpleCacheBridge($cache);
         $deref  = new CachedDereferencer(new Dereferencer(), $cache);
-        $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
+        $path   = fileuri('fixtures/inline-ref.json', __DIR__);
         $result = $deref->dereference($path);
 
         $this->assertSame($result, $cache->get(sha1($path)));
@@ -37,7 +38,7 @@ class CachedDereferencerTest extends \PHPUnit_Framework_TestCase
         $cache  = new SimpleCacheBridge($cache);
         $deref  = new CachedDereferencer(new Dereferencer(), $cache);
         $schema = json_decode(file_get_contents(__DIR__ . '/fixtures/inline-ref.json'));
-        $path   = 'file://' . __DIR__ . '/fixtures/inline-ref.json';
+        $path   = fileuri('fixtures/inline-ref.json', __DIR__);
         $result = $deref->dereference($schema, $path);
 
         $this->assertSame($result, $cache->get(sha1($path)));
