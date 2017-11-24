@@ -27,10 +27,12 @@ final class FileLoader implements LoaderInterface
      */
     public function load($path)
     {
-        if (!file_exists($path)) {
-            throw SchemaLoadingException::notFound($path);
+        $uri = 'file://' . $path;
+        
+        if (!file_exists($uri)) {
+            throw SchemaLoadingException::notFound($uri);
         }
 
-        return $this->jsonDecoder->decode(file_get_contents($path));
+        return $this->jsonDecoder->decode(file_get_contents($uri));
     }
 }
