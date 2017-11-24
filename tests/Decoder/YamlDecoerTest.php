@@ -2,24 +2,27 @@
 
 namespace League\JsonReference\Test\Loader;
 
-use League\JsonReference\Decoder\JsonDecoder;
+use League\JsonReference\Decoder\YamlDecoder;
 use League\JsonReference\DecodingException;
 
-class JsonDecoderTest extends \PHPUnit_Framework_TestCase
+class YamlDecoderTest extends \PHPUnit_Framework_TestCase
 {
     function test_it_decodes()
     {
-        $schema =  <<<'JSON'
-{
-    "type": "object",
-    "properties": {
-        "street_address": { "type": "string" },
-        "city":           { "type": "string" },
-        "state":          { "type": "string" }
-    },
-    "required": ["street_address", "city", "state"]
-}
-JSON;
+        $schema = <<<'YAML'
+type: object
+properties: 
+    street_address: 
+        type: string
+    city:
+        type: string
+    state:
+        type: string
+required: 
+    - street_address
+    - city
+    - state
+YAML;
 
         $expectedObject = (object) [
             'type' => 'object',
@@ -31,7 +34,7 @@ JSON;
             'required' => ['street_address', 'city', 'state']
         ];
 
-        $decoder = new JsonDecoder();
+        $decoder = new YamlDecoder();
         $this->assertEquals($expectedObject, $decoder->decode($schema));
     }
     
@@ -39,8 +42,8 @@ JSON;
     {
         $this->expectException(DecodingException::class);
         
-        $invalidSchema = 'foo';
-        $decoder = new JsonDecoder();
+        $invalidSchema = ' {foo}';
+        $decoder = new YamlDecoder();
         $decoder->decode($invalidSchema);
     }
 }
