@@ -27,6 +27,9 @@ final class FileLoader implements LoaderInterface
      */
     public function load($path)
     {
+        // file:// + path without query
+        $path = 'file://'.explode('?', $path, 2)[0];
+
         if (!file_exists($path)) {
             throw SchemaLoadingException::notFound($path);
         }

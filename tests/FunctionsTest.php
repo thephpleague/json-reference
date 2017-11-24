@@ -15,12 +15,12 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
             ['otherschema.json', 'http://x.y.z/rootschema.json#', 'http://x.y.z/otherschema.json'],
             ['#bar', 'http://x.y.z/otherschema.json#', 'http://x.y.z/otherschema.json#bar'],
             ['t/inner.json#a', 'http://x.y.z/otherschema.json#', 'http://x.y.z/t/inner.json#a'],
-            ['some://where.else/completely#', 'http://x.y.z/rootschema.json#', 'some://where.else/completely'],
+            ['some://where.else/completely#', 'http://x.y.z/rootschema.json#', 'some://where.else/completely#'],
             ['folderInteger.json', 'http://localhost:1234/folder/', 'http://localhost:1234/folder/folderInteger.json'],
             ['some-id.json', '', 'some-id.json'],
             ['item.json', 'http://some/where/other-item.json', 'http://some/where/item.json'],
             ['item.json', 'file:///schemas/other-item.json', 'file:///schemas/item.json'],
-            ['#', 'file://x.y.z/schema.json', 'file://x.y.z/schema.json']
+            ['#', 'file://x.y.z/schema.json', 'file://x.y.z/schema.json#']
         ];
     }
 

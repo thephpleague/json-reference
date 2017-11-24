@@ -2,7 +2,8 @@
 
 namespace League\JsonReference;
 
-use Sabre\Uri;
+//use Sabre\Uri;
+use peterpostmann\uri;
 
 /**
  * @param object|array $json
@@ -49,7 +50,7 @@ function pointer_push($pointer, ...$segments)
  */
 function strip_fragment($ref)
 {
-    $fragment = Uri\parse($ref)['fragment'];
+    $fragment = uri\parse_uri($ref)['fragment'];
 
     return $fragment ? str_replace('#'.$fragment, '#', $ref) : $ref;
 }
@@ -65,7 +66,7 @@ function strip_fragment($ref)
  */
 function resolve_fragment($ref, $schema)
 {
-    $fragment = Uri\parse($ref)['fragment'];
+    $fragment = uri\parse_uri($ref)['fragment'];
 
     if (!is_internal_ref($ref) && is_string($fragment)) {
         return (new Pointer($schema))->get($fragment);
@@ -119,7 +120,9 @@ function is_internal_ref($value)
  */
 function parse_external_ref($ref)
 {
-    if (is_relative_ref($ref)) {
+    $components = uri\parse_uri($ref);
+
+    if (!$components['_protocol']) {
         throw new \InvalidArgumentException(
             sprintf(
                 'The path  "%s" was expected to be an external reference but is missing a prefix.  ' .
@@ -129,8 +132,10 @@ function parse_external_ref($ref)
         );
     }
 
-    list($prefix, $path) = explode('://', $ref, 2);
-    $path = rtrim(strip_fragment($path), '#');
+    $prefix = $components['_protocol'] !== true ? $components['_protocol'] : 'file';
+    $path   = $components['_ressource'];
+    $parts  = explode('://', $path, 2);
+    $path   = count($parts) === 2 ? $parts[1] : $path;
 
     return [$prefix, $path];
 }
@@ -150,7 +155,7 @@ function resolve_uri($id, $parentScope)
         return $id;
     }
 
-    return Uri\resolve($parentScope, $id);
+    return uri\resolve_uri($parentScope, $id);
 }
 
 /**

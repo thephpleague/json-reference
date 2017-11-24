@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "sabre/uri": "^1.2.1",
+        "peterpostmann/uri": "^1.0",
         "psr/simple-cache": "^1.0"
     },
     "require-dev": {
