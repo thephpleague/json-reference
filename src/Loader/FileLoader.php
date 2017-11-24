@@ -2,22 +2,22 @@
 
 namespace League\JsonReference\Loader;
 
-use League\JsonReference\JsonDecoder\JsonDecoder;
-use League\JsonReference\JsonDecoderInterface;
+use League\JsonReference\Decoder\JsonDecoder;
+use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
 
 final class FileLoader implements LoaderInterface
 {
     /**
-     * @var JsonDecoderInterface
+     * @var DecoderInterface
      */
     private $jsonDecoder;
 
     /**
-     * @param JsonDecoderInterface $jsonDecoder
+     * @param DecoderInterface $jsonDecoder
      */
-    public function __construct(JsonDecoderInterface $jsonDecoder = null)
+    public function __construct(DecoderInterface $jsonDecoder = null)
     {
         $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
     }

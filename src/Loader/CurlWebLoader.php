@@ -3,8 +3,8 @@
 namespace League\JsonReference\Loader;
 
 use League\JsonReference;
-use League\JsonReference\JsonDecoder\JsonDecoder;
-use League\JsonReference\JsonDecoderInterface;
+use League\JsonReference\Decoder\JsonDecoder;
+use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
 
 final class CurlWebLoader implements LoaderInterface
@@ -20,16 +20,16 @@ final class CurlWebLoader implements LoaderInterface
     private $curlOptions;
 
     /**
-     * @var JsonDecoderInterface
+     * @var DecoderInterface
      */
     private $jsonDecoder;
 
     /**
      * @param string               $prefix
      * @param array                $curlOptions
-     * @param JsonDecoderInterface $jsonDecoder
+     * @param DecoderInterface $jsonDecoder
      */
-    public function __construct($prefix, array $curlOptions = null, JsonDecoderInterface $jsonDecoder = null)
+    public function __construct($prefix, array $curlOptions = null, DecoderInterface $jsonDecoder = null)
     {
         $this->prefix      = $prefix;
         $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();

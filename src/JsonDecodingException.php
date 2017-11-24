@@ -2,7 +2,10 @@
 
 namespace League\JsonReference;
 
-final class JsonDecodingException extends \RuntimeException
+/**
+ * @deprecated use the DecodingException directly.
+ */
+final class JsonDecodingException extends DecodingException
 {
 
 }

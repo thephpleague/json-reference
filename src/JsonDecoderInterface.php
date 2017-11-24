@@ -2,14 +2,9 @@
 
 namespace League\JsonReference;
 
-interface JsonDecoderInterface
+/**
+ * @deprecated use the DecoderInterface directly.
+ */
+interface JsonDecoderInterface extends DecoderInterface
 {
-    /**
-     * @param string $json
-     *
-     * @return object
-     *
-     * @throws JsonDecodingException
-     */
-    public function decode($json);
 }
