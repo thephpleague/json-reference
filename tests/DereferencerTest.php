@@ -52,6 +52,15 @@ class DereferencerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('string', $result->items->properties->title->type);
     }
+    
+    function test_it_resolves_mixed_references()
+    {
+        $deref  = new Dereferencer();
+        $deref->getLoaderManager()->getDecoderManager()->registerYamlDecoder();
+        $result = $deref->dereference('http://localhost:1234/albums.yaml');
+
+        $this->assertSame('string', $result->items->properties->title->type);
+    }
 
     function test_it_fails_when_resolving_a_remote_reference_without_id_or_uri()
     {

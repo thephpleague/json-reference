@@ -220,3 +220,94 @@ function merge_ref($schema, $resolvedRef, $path = '')
     }
     return $schema;
 }
+
+/**
+ * Parses Content-Type header and returns an array with type, subtype, suffix and parameters
+ *
+ * @param string $contentType
+ *
+ * @return array
+ */
+function parseContentTypeHeader($contentType)
+{
+    preg_match('%
+        ^
+            (?<type>[^\/;+]+)
+            (
+                \/
+                (?<subtype>[^;+]*)
+                (?<has_suffix>\+(?<suffix>[^;]*))?
+                ;?
+                (?<parameter>.*)?
+            )
+        $
+        %x', $contentType, $matches);
+
+    $result = [
+        'type' => strtolower($matches['type']),
+        'subtype' => strtolower($matches['subtype']),
+        'suffix' => $matches['has_suffix'] ? strtolower($matches['suffix']) : null,
+        'parameter' => null
+    ];
+
+    if ($matches['parameter']) {
+        $result['parameter'] = [];
+        
+        preg_match_all('/\s*([^=;]+)\s*(=([^;]*))?;?/', $matches['parameter'], $parameters, PREG_SET_ORDER);
+
+        foreach ($parameters as $parameter) {
+            $result['parameter'][strtolower($parameter[1])] = isset($parameter[3]) ? $parameter[3] : '';
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * Determine the file type based on the given context (http-headers, uri)
+ *
+ * @param mixed $context
+ *
+ * @return string
+ */
+function determineMediaType($context)
+{
+    if (isset($context['headers']) && $context['headers']) {
+        if (isset($context['headers']['Content-Type'])) {
+            $context['Content-Type'] = $context['headers']['Content-Type'];
+        }
+    }
+
+    $type = null;
+
+    if (isset($context['Content-Type']) && $context['Content-Type']) {
+        $contentType = parseContentTypeHeader($context['Content-Type']);
+
+        if (isset($contentType['suffix'])) {
+            return '+'.$contentType['suffix'];
+        } else {
+            $type = $contentType['type'].'/'.$contentType['subtype'];
+        }
+    }
+
+    $extension = null;
+
+    if (isset($context['uri']) && $context['uri']) {
+        $path = Uri\parse($context['uri'])['path'];
+        $info = pathinfo($path);
+
+        if (isset($info['extension'])) {
+            $extension = $info['extension'];
+        }
+    }
+
+    if ($type === 'application/octet-stream' && $extension) {
+        return $extension;
+    } elseif ($type) {
+        return $type;
+    } elseif ($extension) {
+        return $extension;
+    } else {
+        return null;
+    }
+}

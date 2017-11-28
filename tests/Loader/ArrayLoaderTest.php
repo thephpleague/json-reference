@@ -33,4 +33,16 @@ class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
         ]);
         $loader->load('bad/type');
     }
+
+    function test_constructor_accepts_decoder_interface() 
+    {
+        $schemas = [
+            'string/schema' => 'type: string'
+        ];
+
+        $decoder = new \League\JsonReference\Decoder\YamlDecoder;
+        $loader  = new \League\JsonReference\Loader\ArrayLoader($schemas, $decoder);
+
+        $this->assertEquals((object) ['type'=>'string'], $loader->load('string/schema'));
+    }
 }
