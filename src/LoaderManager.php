@@ -2,6 +2,7 @@
 
 namespace League\JsonReference;
 
+use League\JsonReference\DecoderManager;
 use League\JsonReference\Loader\CurlWebLoader;
 use League\JsonReference\Loader\FileGetContentsWebLoader;
 use League\JsonReference\Loader\FileLoader;
@@ -12,18 +13,25 @@ final class LoaderManager
      * @var LoaderInterface[]
      */
     private $loaders = [];
+    
+    /**
+     * @var DecoderManager
+     */
+    private $decoderManager;
 
     /**
      * @param LoaderInterface[] $loaders
+     * @param DecoderManager $decoderManager
      */
-    public function __construct(array $loaders = [])
+    public function __construct(array $loaders = [], DecoderManager $decoderManager = null)
     {
+        $this->decoderManager = $decoderManager ?: new DecoderManager([], 'json');
+        
         if (empty($loaders)) {
             $this->registerDefaultFileLoader();
             $this->registerDefaultWebLoaders();
-            return;
         }
-
+        
         foreach ($loaders as $prefix => $loader) {
             $this->registerLoader($prefix, $loader);
         }
@@ -82,7 +90,7 @@ final class LoaderManager
      */
     private function registerDefaultFileLoader()
     {
-        $this->loaders['file'] = new FileLoader();
+        $this->loaders['file'] = new FileLoader($this->decoderManager);
     }
 
     /**
@@ -94,11 +102,19 @@ final class LoaderManager
     private function registerDefaultWebLoaders()
     {
         if (function_exists('curl_init')) {
-            $this->loaders['https'] = new CurlWebLoader('https://');
-            $this->loaders['http']  = new CurlWebLoader('http://');
+            $this->loaders['https'] = new CurlWebLoader('https://', null, $this->decoderManager);
+            $this->loaders['http']  = new CurlWebLoader('http://', null, $this->decoderManager);
         } else {
-            $this->loaders['https'] = new FileGetContentsWebLoader('https://');
-            $this->loaders['http']  = new FileGetContentsWebLoader('http://');
+            $this->loaders['https'] = new FileGetContentsWebLoader('https://', $this->decoderManager);
+            $this->loaders['http']  = new FileGetContentsWebLoader('http://', $this->decoderManager);
         }
+    }
+
+    /**
+     * @return DecoderManager
+     */
+    public function getDecoderManager()
+    {
+        return $this->decoderManager;
     }
 }

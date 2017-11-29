@@ -3,6 +3,9 @@
 namespace League\JsonReference\Test;
 
 use function League\JsonReference\pointer_push;
+use function League\JsonReference\parseContentTypeHeader;
+use function League\JsonReference\determineMediaType;
+use function League\JsonReference\parseHttpResponseHeader;
 
 class FunctionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,5 +52,91 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     function test_pointer_push_handles_root_pointers()
     {
         $this->assertSame('/somewhere', pointer_push('/', 'somewhere'));
+    }
+
+    public function contentTypeHeaders()
+    {
+        return [
+            [
+                'text/html; charset=utf-8',
+                [
+                    'type'    => 'text',
+                    'subtype' => 'html',
+                    'suffix'  => null,
+                    'parameter' => [
+                        'charset' => 'utf-8'
+                    ]
+                ] 
+            ],
+            [
+                'application/json',
+                [
+                    'type' => 'application',
+                    'subtype' => 'json',
+                    'suffix'  => null,
+                    'parameter' => null
+                ] 
+            ],
+            [
+                'xxx/yyy+zzz',
+                [
+                    'type' => 'xxx',
+                    'subtype' => 'yyy',
+                    'suffix'  => 'zzz',
+                    'parameter' => null
+                ] 
+            ],
+            [
+                'xxx/yyy+',
+                [
+                    'type' => 'xxx',
+                    'subtype' => 'yyy',
+                    'suffix'  => '',
+                    'parameter' => null
+                ] 
+            ],
+            [
+                'teXt/HTML; CharSet=UtF-8',
+                [
+                    'type'    => 'text',
+                    'subtype' => 'html',
+                    'suffix'  => null,
+                    'parameter' => [
+                        'charset' => 'UtF-8'
+                    ]
+                ] 
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider contentTypeHeaders
+     */
+    function test_content_type_parser($contentType, $expectedResult)
+    {
+        $this->assertSame($expectedResult, parseContentTypeHeader($contentType));
+    }
+
+    function mediaContext()
+    {
+        return [
+            [['headers' => ['Content-Type' => 'xxx/yyy'    ],                   ], 'xxx/yyy'],
+            [['headers' => ['Content-Type' => 'xxx/yyy+zzz'],                   ], '+zzz'],
+            [['headers' => ['Content-Type' => 'xxx/yyy+zzz'], 'uri' => 'foo.bar'], '+zzz'],
+            [['headers' => ['Content-Type' => 'xxx/yyy'    ], 'uri' => 'foo.bar'], 'xxx/yyy'],
+            [[                                                'uri' => 'foo.bar'], 'bar'],
+            [[                                                                  ], null],
+            [[ 'uri' => 'example.org/foo.bar?a=b'                               ], 'bar'],
+            [['headers' => ['Content-Type' => false        ], 'uri' => 'foo.bar'], 'bar'],
+            [['headers' => ['Content-Type' => 'application/octet-stream'], 'uri' => 'foo.bar'], 'bar']
+        ];
+    }
+
+    /**
+     * @dataProvider mediaContext
+     */
+    function test_determineMediaType($mediaContext, $expectedResult) 
+    {
+        $this->assertSame($expectedResult, determineMediaType($mediaContext));
     }
 }

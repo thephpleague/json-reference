@@ -27,4 +27,13 @@ class CurlWebLoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new CurlWebLoader('http://');
         $loader->load('localhost:1234/unknown');
     }
+    
+    function test_constructor_accepts_decoder_interface() 
+    {
+        $decoder  = new \League\JsonReference\Decoder\YamlDecoder;
+        $loader   = new CurlWebLoader('http://', null, $decoder);
+        $response = $loader->load('localhost:1234/string.yaml');
+
+        $this->assertEquals((object) ['type'=>'string'], $response);
+    }
 }

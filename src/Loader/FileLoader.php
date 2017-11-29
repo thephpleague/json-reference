@@ -2,24 +2,29 @@
 
 namespace League\JsonReference\Loader;
 
-use League\JsonReference\Decoder\JsonDecoder;
+use League\JsonReference\DecoderManager;
 use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
 use League\JsonReference\SchemaLoadingException;
+use function League\JsonReference\determineMediaType;
 
 final class FileLoader implements LoaderInterface
 {
     /**
-     * @var DecoderInterface
+     * @var DecoderManager
      */
-    private $jsonDecoder;
+    private $decoderManager;
 
     /**
-     * @param DecoderInterface $jsonDecoder
+     * @param DecoderInterface|DecoderManager $decoderManager
      */
-    public function __construct(DecoderInterface $jsonDecoder = null)
+    public function __construct($decoderManager = null)
     {
-        $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
+        if ($decoderManager instanceof DecoderInterface) {
+            $this->decoderManager = new DecoderManager([null => $decoderManager]);
+        } else {
+            $this->decoderManager = $decoderManager ?: new DecoderManager();
+        }
     }
 
     /**
@@ -33,6 +38,7 @@ final class FileLoader implements LoaderInterface
             throw SchemaLoadingException::notFound($uri);
         }
 
-        return $this->jsonDecoder->decode(file_get_contents($uri));
+        $type = determineMediaType(['uri' => $uri]);
+        return $this->decoderManager->getDecoder($type)->decode(file_get_contents($uri));
     }
 }

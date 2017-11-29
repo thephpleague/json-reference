@@ -3,9 +3,10 @@
 namespace League\JsonReference\Loader;
 
 use League\JsonReference;
-use League\JsonReference\Decoder\JsonDecoder;
+use League\JsonReference\DecoderManager;
 use League\JsonReference\DecoderInterface;
 use League\JsonReference\LoaderInterface;
+use function League\JsonReference\determineMediaType;
 
 final class CurlWebLoader implements LoaderInterface
 {
@@ -20,20 +21,25 @@ final class CurlWebLoader implements LoaderInterface
     private $curlOptions;
 
     /**
-     * @var DecoderInterface
+     * @var DecoderManager
      */
-    private $jsonDecoder;
+    private $decoderManager;
 
     /**
-     * @param string               $prefix
-     * @param array                $curlOptions
-     * @param DecoderInterface $jsonDecoder
+     * @param string                          $prefix
+     * @param array                           $curlOptions
+     * @param DecoderInterface|DecoderManager $decoderManager
      */
-    public function __construct($prefix, array $curlOptions = null, DecoderInterface $jsonDecoder = null)
+    public function __construct($prefix, array $curlOptions = null, $decoderManager = null)
     {
-        $this->prefix      = $prefix;
-        $this->jsonDecoder = $jsonDecoder ?: new JsonDecoder();
+        $this->prefix = $prefix;
         $this->setCurlOptions($curlOptions);
+        
+        if ($decoderManager instanceof DecoderInterface) {
+            $this->decoderManager = new DecoderManager([null => $decoderManager]);
+        } else {
+            $this->decoderManager = $decoderManager ?: new DecoderManager();
+        }
     }
 
     /**
@@ -44,14 +50,15 @@ final class CurlWebLoader implements LoaderInterface
         $uri = $this->prefix . $path;
         $ch = curl_init($uri);
         curl_setopt_array($ch, $this->curlOptions);
-        list($response, $statusCode) = $this->getResponseBodyAndStatusCode($ch);
+        list($response, $statusCode, $type) = $this->getResponseBodyStatusCodeAndContentType($ch);
         curl_close($ch);
-
+        
         if ($statusCode >= 400 || !$response) {
             throw JsonReference\SchemaLoadingException::create($uri);
         }
 
-        return $this->jsonDecoder->decode($response);
+        $type = determineMediaType(['Content-Type' => $type, 'uri' => $uri]);
+        return $this->decoderManager->getDecoder($type)->decode($response);
     }
 
     /**
@@ -59,12 +66,17 @@ final class CurlWebLoader implements LoaderInterface
      *
      * @return array
      */
-    private function getResponseBodyAndStatusCode($ch)
+    private function getResponseBodyStatusCodeAndContentType($ch)
     {
-        $response   = curl_exec($ch);
-        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        $response    = curl_exec($ch);
+        $statusCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $body        = substr($response, $header_size);
+        $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
-        return [$response, $statusCode];
+        return [$body, $statusCode, $contentType];
     }
 
     /**
