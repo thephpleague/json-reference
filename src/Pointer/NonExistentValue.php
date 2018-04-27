@@ -11,13 +11,19 @@ final class NonExistentValue
      * @var string
      */
     private $value;
+    /**
+     * @var string
+     */
+    private $pointer;
 
     /**
      * @param string $value The referenced value.
+     * @param string $pointer The full pointer which contains the invalid value.
      */
-    public function __construct($value)
+    public function __construct($value, $pointer)
     {
         $this->value = $value;
+        $this->pointer = $pointer;
     }
 
     /**
@@ -26,5 +32,13 @@ final class NonExistentValue
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPointer()
+    {
+        return $this->pointer;
     }
 }

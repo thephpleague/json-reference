@@ -38,7 +38,7 @@ final class Pointer
         $value = $this->traverse($pointer);
 
         if ($value instanceof NonExistentValue) {
-            throw InvalidPointerException::nonexistentValue($value->getValue());
+            throw InvalidPointerException::nonexistentValue($value->getValue(), $value->getPointer());
         }
 
         return $value;
@@ -140,13 +140,13 @@ final class Pointer
      */
     private function traverse($pointer)
     {
-        $pointer = $this->parse($pointer);
+        $parsedPointer = $this->parse($pointer);
         $json    = $this->json;
 
-        foreach ($pointer as $segment) {
+        foreach ($parsedPointer as $segment) {
             if ($json instanceof Reference) {
                 if (!$json->has($segment)) {
-                    return new NonExistentValue($segment);
+                    return new NonExistentValue($segment, $pointer);
                 }
                 $json = $json->get($segment);
             } elseif (is_object($json)) {
@@ -155,16 +155,16 @@ final class Pointer
                     $segment = '_empty_';
                 }
                 if (!property_exists($json, $segment)) {
-                    return new NonExistentValue($segment);
+                    return new NonExistentValue($segment, $pointer);
                 }
                 $json = $json->$segment;
             } elseif (is_array($json)) {
                 if (!array_key_exists($segment, $json)) {
-                    return new NonExistentValue($segment);
+                    return new NonExistentValue($segment, $pointer);
                 }
                 $json = $json[$segment];
             } else {
-                return new NonExistentValue($segment);
+                return new NonExistentValue($segment, $pointer);
             }
         }
 
