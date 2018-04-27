@@ -16,12 +16,17 @@ final class InvalidPointerException extends \InvalidArgumentException
 
     /**
      * @param string $value
+     * @param string $pointer
      *
      * @return static
      */
-    public static function nonexistentValue($value)
+    public static function nonexistentValue($value, $pointer)
     {
-        return new static(sprintf('The pointer referenced a value that does not exist.  The value was: "%s"', $value));
+        return new static(sprintf(
+            'The pointer "%1$s" referenced a value "%2$s" that does not exist.',
+            $pointer,
+            $value
+        ));
     }
 
     /**
