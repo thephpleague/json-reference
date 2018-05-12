@@ -6,6 +6,15 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Documentation][ico-docs]][link-docs]
 
+# Unmaintained!
+
+This project is no longer maintained.  Recommended alternatives:
+
+- [opis/json-schema](https://github.com/opis/json-schema)
+- [swaggest/php-json-schema](https://github.com/swaggest/php-json-schema)
+
+-----
+
 Most JSON schemas use JSON references to minimize duplication. A JSON reference is an object that looks like {"$ref": "http://some/where"} and points to a JSON object somewhere else.
 
 JSON Reference is a library for resolving references.
